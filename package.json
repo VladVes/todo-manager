@@ -36,7 +36,7 @@
     "start": "babel-node -- src/serve/bin/todoManager.js",
     "nodemon": "nodemon",
     "webpack": "webpack",
-    "postinstall": "npm run build"
+    "postinstall": ""
   },
   "repository": {
     "type": "git",
@@ -100,20 +100,20 @@
     "sugarss": "^1.0.1",
     "webpack": "^3.10.0"
   },
-"devDependencies": {
-  "babel-eslint": "*",
-  "enzyme": "*",
-  "enzyme-adapter-react-16": "*",
-  "eslint": "*",
-  "eslint-config-airbnb-base": "*",
-  "eslint-plugin-flowtype": "*",
-  "eslint-plugin-import": "*",
-  "eslint-plugin-jest": "*",
-  "jest": "*",
-  "jest-supertest-matchers": "*",
-  "timeout-then": "*",
-  "nodemon": "*",
-  "supertest": "*",
-  "nock": "^9.1.0"
+  "devDependencies": {
+    "babel-eslint": "*",
+    "enzyme": "*",
+    "enzyme-adapter-react-16": "*",
+    "eslint": "*",
+    "eslint-config-airbnb-base": "*",
+    "eslint-plugin-flowtype": "*",
+    "eslint-plugin-import": "*",
+    "eslint-plugin-jest": "*",
+    "jest": "*",
+    "jest-supertest-matchers": "*",
+    "timeout-then": "*",
+    "nodemon": "*",
+    "supertest": "*",
+    "nock": "^9.1.0"
   }
 }
