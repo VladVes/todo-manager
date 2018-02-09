@@ -32,6 +32,7 @@ describe('api base', () => {
   });
 
   afterEach((done) => {
+    console.log('AFTER EACH!');
     server.close();
     done();
   });
