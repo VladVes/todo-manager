@@ -80,6 +80,7 @@
     "koa-router": "next",
     "koa-static": "*",
     "koa-webpack": "*",
+    "keygrip": "*",
     "lodash": "^4.17.4",
     "moment": "^2.19.4",
     "popper.js": "^1.12.9",
