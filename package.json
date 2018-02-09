@@ -10,24 +10,24 @@
     "node": "8"
   },
   "jest": {
-   "testEnvironment": "node",
-   "verbose": true,
-   "collectCoverage": true,
-   "collectCoverageFrom": [
-     "**/*.{js,jsx}",
-     "!**/node_modules/**",
-     "!**/dist/**"
-   ],
-   "coverageDirectory": "./coverage",
-   "coveragePathIgnorePatterns": [
-     "./dist/",
-     "./node_modules/",
-     "./src/bin",
-     "./public/assets",
-     "webpack.config.babel.js",
-     "./coverage"
-   ]
- },
+    "testEnvironment": "node",
+    "verbose": true,
+    "collectCoverage": true,
+    "collectCoverageFrom": [
+      "**/*.{js,jsx}",
+      "!**/node_modules/**",
+      "!**/dist/**"
+    ],
+    "coverageDirectory": "./coverage",
+    "coveragePathIgnorePatterns": [
+      "./dist/",
+      "./node_modules/",
+      "./src/bin",
+      "./public/assets",
+      "webpack.config.babel.js",
+      "./coverage"
+    ]
+  },
   "scripts": {
     "test": "jest",
     "babel-node": "babel-node",
@@ -36,7 +36,7 @@
     "start": "babel-node -- src/serve/bin/todoManager.js",
     "nodemon": "nodemon",
     "webpack": "webpack",
-    "postinstall": ""
+    "postinstall": "npm run build"
   },
   "repository": {
     "type": "git",
@@ -64,12 +64,13 @@
     "babel-preset-stage-0": "*",
     "babel-register": "^6.26.0",
     "bootstrap": "^4.0.0-beta",
-    "css-loader": "^0.28.7",
     "classnames": "*",
+    "css-loader": "^0.28.7",
     "debug": "*",
     "dotenv": "^4.0.0",
     "jquery": "^3.2.1",
     "jquery-ujs": "^1.2.2",
+    "keygrip": "*",
     "koa": "*",
     "koa-bodyparser": "*",
     "koa-flash-simple": "*",
@@ -80,7 +81,6 @@
     "koa-router": "next",
     "koa-static": "*",
     "koa-webpack": "*",
-    "keygrip": "*",
     "lodash": "^4.17.4",
     "moment": "^2.19.4",
     "popper.js": "^1.12.9",
@@ -89,9 +89,9 @@
     "precss": "^2.0.0",
     "react": "*",
     "react-dom": "*",
+    "react-redux": "*",
     "redux": "*",
     "redux-actions": "*",
-    "redux-react": "*",
     "redux-form": "*",
     "redux-thunk": "*",
     "rollbar": "^2.3.2",
@@ -109,6 +109,7 @@
     "eslint-plugin-flowtype": "*",
     "eslint-plugin-import": "*",
     "eslint-plugin-jest": "*",
+    "eslint-plugin-react": "*",
     "jest": "*",
     "jest-supertest-matchers": "*",
     "timeout-then": "*",
