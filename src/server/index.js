@@ -23,10 +23,10 @@ import getWebpackConfig from '../../webpack.config.babel';
 dotenv.config();
 export default () => {
   const app = new Koa();
-  //const rollbar = new Rollbar('d127b6e52cdd4ebcaea93d684c756d7e');
+  const rollbar = new Rollbar('key'); // eslint-disable-line
   const log = getLogger('App');
 
-  app.keys = new KeyGrip(['shtirlitz', 'has come', 'to sing cookies'], 'sha256');
+  app.keys = new KeyGrip(['hotel', 'bravo', 'echo', 'foxtrot'], 'sha256');
   app.use(session(app));
   app.use(flash());
   app.use(async (ctx, next) => {
@@ -39,7 +39,7 @@ export default () => {
       await next();
     } catch (err) {
       log('Error: ', err);
-      //rollbar.error(err, ctx.request);
+      // rollbar.error(err, ctx.request);
     }
   });
   app.use(bodyParser());
@@ -66,8 +66,6 @@ export default () => {
   addRoutes(router);
   app.use(router.allowedMethods());
   app.use(router.routes());
-
-  console.log(path.join(__dirname, 'views'));
 
   const pug = new Pug({
     viewPath: path.join(__dirname, 'views'),
