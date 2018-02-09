@@ -1,0 +1,118 @@
+{
+  "name": "todomanager",
+  "version": "1.0.0",
+  "description": "Todo manager",
+  "main": "dist/index.js",
+  "bin": {
+    "todomanager": "dist/bin/todoManager.js"
+  },
+  "engines": {
+    "node": "8"
+  },
+  "jest": {
+   "testEnvironment": "node",
+   "verbose": true,
+   "collectCoverage": true,
+   "collectCoverageFrom": [
+     "**/*.{js,jsx}",
+     "!**/node_modules/**",
+     "!**/dist/**"
+   ],
+   "coverageDirectory": "./coverage",
+   "coveragePathIgnorePatterns": [
+     "./dist/",
+     "./node_modules/",
+     "./src/bin",
+     "./public/assets",
+     "webpack.config.babel.js",
+     "./coverage"
+   ]
+ },
+  "scripts": {
+    "test": "jest",
+    "babel-node": "babel-node",
+    "eslint": "eslint",
+    "build": "npm run webpack -- -p --env production && babel src/server --out-dir dist --source-map inline",
+    "start": "babel-node -- src/serve/bin/todoManager.js",
+    "nodemon": "nodemon",
+    "webpack": "webpack",
+    "postinstall": "npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VladVes/todo-manager.git"
+  },
+  "keywords": [
+    "todo",
+    "manager"
+  ],
+  "author": "Vladimir Veselov",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/VladVes/todo-manager/issues"
+  },
+  "homepage": "https://github.com/VladVes/todo-manager#readme",
+  "dependencies": {
+    "autoprefixer": "^7.2.3",
+    "axios": "*",
+    "babel-cli": "*",
+    "babel-core": "*",
+    "babel-loader": "*",
+    "babel-polyfill": "*",
+    "babel-preset-env": "*",
+    "babel-preset-flow": "*",
+    "babel-preset-stage-0": "*",
+    "babel-register": "^6.26.0",
+    "bootstrap": "^4.0.0-beta",
+    "css-loader": "^0.28.7",
+    "classnames": "*",
+    "debug": "*",
+    "dotenv": "^4.0.0",
+    "jquery": "^3.2.1",
+    "jquery-ujs": "^1.2.2",
+    "koa": "*",
+    "koa-bodyparser": "*",
+    "koa-flash-simple": "*",
+    "koa-generic-session": "*",
+    "koa-logger": "*",
+    "koa-methodoverride": "*",
+    "koa-pug": "3.0.0-2",
+    "koa-router": "next",
+    "koa-static": "*",
+    "koa-webpack": "*",
+    "lodash": "^4.17.4",
+    "moment": "^2.19.4",
+    "popper.js": "^1.12.9",
+    "postcss-import": "^11.0.0",
+    "postcss-loader": "^2.0.9",
+    "precss": "^2.0.0",
+    "react": "*",
+    "react-dom": "*",
+    "redux": "*",
+    "redux-actions": "*",
+    "redux-react": "*",
+    "redux-form": "*",
+    "redux-thunk": "*",
+    "rollbar": "^2.3.2",
+    "style-loader": "^0.19.1",
+    "sugarcss": "^1.0.3",
+    "sugarss": "^1.0.1",
+    "webpack": "^3.10.0"
+  },
+"devDependencies": {
+  "babel-eslint": "*",
+  "enzyme": "*",
+  "enzyme-adapter-react-16": "*",
+  "eslint": "*",
+  "eslint-config-airbnb-base": "*",
+  "eslint-plugin-flowtype": "*",
+  "eslint-plugin-import": "*",
+  "eslint-plugin-jest": "*",
+  "jest": "*",
+  "jest-supertest-matchers": "*",
+  "timeout-then": "*",
+  "nodemon": "*",
+  "supertest": "*",
+  "nock": "^9.1.0"
+  }
+}
