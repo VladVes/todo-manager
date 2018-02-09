@@ -1,3 +1,5 @@
+import { mongodb } from '../models'
+
 export default (router) => {
   router.get('root', '/', (ctx) => {
     ctx.render('start/index', {
