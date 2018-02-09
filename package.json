@@ -33,10 +33,9 @@
     "babel-node": "babel-node",
     "eslint": "eslint",
     "build": "npm run webpack -- -p --env production && babel src/server --out-dir dist --source-map inline",
-    "start": "babel-node -- src/serve/bin/todoManager.js",
+    "start": "babel-node -- src/server/bin/todoManager.js",
     "nodemon": "nodemon",
-    "webpack": "webpack",
-    "postinstall": "npm run build"
+    "webpack": "webpack"
   },
   "repository": {
     "type": "git",
@@ -55,7 +54,8 @@
   "dependencies": {
     "autoprefixer": "^7.2.3",
     "axios": "*",
-    "babel-cli": "*",
+    "babel": "^6.23.0",
+    "babel-cli": "^6.26.0",
     "babel-core": "*",
     "babel-loader": "*",
     "babel-polyfill": "*",
@@ -63,7 +63,7 @@
     "babel-preset-flow": "*",
     "babel-preset-stage-0": "*",
     "babel-register": "^6.26.0",
-    "bootstrap": "^4.0.0-beta",
+    "bootstrap": "^4.0.0",
     "classnames": "*",
     "css-loader": "^0.28.7",
     "debug": "*",
@@ -110,11 +110,11 @@
     "eslint-plugin-import": "*",
     "eslint-plugin-jest": "*",
     "eslint-plugin-react": "*",
-    "jest": "*",
+    "jest": "^22.2.1",
     "jest-supertest-matchers": "*",
-    "timeout-then": "*",
-    "nodemon": "*",
+    "nock": "^9.1.0",
+    "nodemon": "^1.14.12",
     "supertest": "*",
-    "nock": "^9.1.0"
+    "timeout-then": "*"
   }
 }

@@ -14,12 +14,13 @@ import serve from 'koa-static';
 import koaLogger from 'koa-logger';
 import Pug from 'koa-pug';
 import KeyGrip from 'keygrip';
+import dotenv from 'dotenv';
 
 import addRoutes from './routes';
 import getLogger from './lib/log';
-import getWebpackConfig from '../webpack.config.babel';
+import getWebpackConfig from '../../webpack.config.babel';
 
-
+dotenv.config();
 export default () => {
   const app = new Koa();
   //const rollbar = new Rollbar('d127b6e52cdd4ebcaea93d684c756d7e');
@@ -48,7 +49,7 @@ export default () => {
     }
     return null;
   }));
-  app.use(serve(path.join(__dirname, '..', 'public')));
+  app.use(serve(path.join(__dirname, '..', '..', 'public')));
 
   if (process.env.NODE_ENV === 'production') {
     app.use(middleware({
@@ -66,12 +67,14 @@ export default () => {
   app.use(router.allowedMethods());
   app.use(router.routes());
 
+  console.log(path.join(__dirname, 'views'));
+
   const pug = new Pug({
-    viewPath: path.join(__dirname, '..', 'views'),
+    viewPath: path.join(__dirname, 'views'),
     debug: true,
     compileDebug: true,
     locals: [],
-    basedir: path.join(__dirname, '..', 'views'),
+    basedir: path.join(__dirname, 'views'),
     helperPath: [
       { _ },
       { urlFor: (...args) => router.url(...args) },

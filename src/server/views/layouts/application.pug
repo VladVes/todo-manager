@@ -1,0 +1,35 @@
+doctype html
+html(lang="en")
+  head
+    title= Title
+    script(src='/assets/vendor.js')
+    script(src='/assets/application.js')
+    script(src='/assets/style.css')
+  body
+    nav.navbar.navbar-expand-lg.navbar-light.bg-faded
+      a.navbar-brand(href="/") Task Manager
+      button.navbar-toggler(data-toggle="collapse" data-target="#navbarSupportedContent")
+        span.navbar-toggler-icon
+      .collapse.navbar-collapse
+        ul.navbar-nav.mr-auto
+          li.nav-item
+            a.nav-link(href=urlFor('users')) Users
+          li.nav-item
+            a.nav-link(href=urlFor('tasks')) Tasks
+        ul.navbar-nav
+          if isSignedIn()
+            li.nav-item
+              a.nav-link(href=urlFor('profile') data-method='get' rel='nofollow') Profile
+            li.nav-item
+              a.nav-link(href=urlFor('session') data-method='delete' rel='nofollow') Sign Out
+          else
+            li.nav-item
+              a.nav-link(href=urlFor('newSession')) Sign In
+            li.nav-item
+              a.nav-link(href=urlFor('newUser')) Sign Up
+    div(class='container w-50 mx-auto')
+      - const msg = flash.get()
+      if msg
+        .alert.alert-info.m-3= msg
+.container.w-65.mx-auto
+  block content
