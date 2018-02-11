@@ -105,6 +105,7 @@
   },
   "devDependencies": {
     "babel-eslint": "*",
+    "babel-preset-react": "^6.24.1",
     "enzyme": "*",
     "enzyme-adapter-react-16": "*",
     "eslint": "^4.17.0",
@@ -118,6 +119,7 @@
     "nock": "^9.1.0",
     "nodemon": "^1.14.12",
     "supertest": "*",
-    "timeout-then": "*"
+    "timeout-then": "*",
+    "webpack-dev-server": "^2.11.1"
   }
 }
