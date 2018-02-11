@@ -1,10 +1,10 @@
 import React from 'react'; // eslint-disable-line
-import NewToDoFormContainer from '../containers/NewToDoForm';
-import ToDoListContainer from '../containers/ToDoList';
+import NewTodoFormContainer from '../containers/NewTodoForm';
+import TodoListContainer from '../containers/TodoList';
 
 export default () => (
   <div className="col-5">
-    <NewToDoFormContainer />
-    <ToDoListContainer />
+    <NewTodoFormContainer />
+    <TodoListContainer />
   </div>
 );
