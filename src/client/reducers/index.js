@@ -42,7 +42,9 @@ const tasksFetchingState = handleActions({
 
 const tasks = handleActions({
   [actions.fetchTasksSuccess](state, { payload }) {
-    return mapKeys(payload.tasks, 'id');
+    console.log("FROM REDUCER: ", payload);
+    console.log("REDUCER - AFTER MAPKeys: ", mapKeys(payload.tasks, '_id'));
+    return mapKeys(payload.tasks, '_id');
   },
   [actions.addTaskSuccess](state, { payload: { task } }) {
     return { ...state, [task.id]: task };
