@@ -33,6 +33,7 @@ export const fetchTasks = () => async (dispatch) => {
   try {
     const url = routes.tasksUrl();
     const response = await axios.get(url);
+    console.log("FROM FETCH TASKS: ", response.data);
     dispatch(fetchTasksSuccess({ tasks: response.data }));
   } catch (e) {
     dispatch(fetchTasksFailure());
