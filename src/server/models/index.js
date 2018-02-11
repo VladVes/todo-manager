@@ -9,7 +9,7 @@ const config = getConfig()[process.env.NODE_ENV];
 if (config.use_env_variable) {
   mongoose.connect(config.use_env_variable);
 } else {
-  mongoose.connect(config.storage);
+  mongoose.connect(config.connectionString);
 }
 
 const db = mongoose.connection;
@@ -20,10 +20,8 @@ db.on('error', (e) => {
 });
 db.once('open', function() {
   log('connected');
-  console.lob.bind(console, 'we\'re connected!');
+  console.log.bind(console, 'we\'re connected!');
 });
-
-
 
 const newTask = new Task({ name: 'First task', description: 'get the things done'});
 
@@ -42,7 +40,6 @@ const addTask = async (task) => {
 };
 
 const savedTask = addTask(newTask);
-
 
 db.mongoose = mongoose;
 
