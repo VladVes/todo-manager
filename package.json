@@ -26,7 +26,8 @@
       "./public/assets",
       "webpack.config.babel.js",
       "./coverage"
-    ]
+    ],
+    "snapshotSerializers": ["enzyme-to-json/serializer"]
   },
   "scripts": {
     "test": "jest",
