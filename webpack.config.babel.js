@@ -7,16 +7,18 @@ export default () => ({
     vendor: ['babel-polyfill', 'jquery', 'jquery-ujs', 'popper.js', 'bootstrap'],
   },
   output: {
-    filename: 'application.js',
+    filename: 'bundle.js',
     path: path.join(__dirname, 'public', 'assets'),
     publicPath: '/assets/',
   },
   module: {
-    rules: [
+    loaders: [
       {
-        test: /\.js$/,
+        test: /\.js[x]?$/,
         exclude: /node_modules/,
-        use: 'babel-loader',
+        loader: 'babel-loader',
+        include: path.join(__dirname, 'src/client'),
+        query: { presets: ['es2015', 'react', 'stage-0'] }
       },
       {
         test: /\.css$/,
