@@ -53,7 +53,7 @@ export default () => ({
       // Passing Infinity just creates the commons chunk, but moves no modules into it.
       // In other words, we only put what's in the vendor entry definition in vendor-bundle.js
       minChunks: Infinity,
-    }),
-    new webpack.optimize.UglifyJsPlugin(),
+    })//,
+    //new webpack.optimize.UglifyJsPlugin(),
   ],
 });
