@@ -25,11 +25,11 @@ export default class TodoList extends React.Component {
     const tasks = filter === 'all' ? rawTasks : rawTasks.filter(t => t.state === filter);
 
     return <ul className="list-group">
-      {tasks.map(({ id, text, state }) =>
-        <li key={id} className="list-group-item d-flex justify-content-end">
-          <a href="#" className="app-toggle-state mr-3" onClick={this.toggleTaskState(id)}>-</a>
-          <div className="mr-auto">{(state === 'finished' ? <s>{text}</s> : text)}</div>
-          <a href="#" className="app-remove-task" onClick={this.removeTask(id)}>x</a>
+      {tasks.map(({ _id, header, priority, state }) =>
+        <li key={_id} className="list-group-item d-flex justify-content-end">
+          <a href="#" className="app-toggle-state mr-3" onClick={this.toggleTaskState(_id)}>-</a>
+          <div className="mr-auto">{(state === 'closed' ? <s>{header}</s> : header)}</div>
+          <a href="#" className="app-remove-task" onClick={this.removeTask(_id)}>x</a>
         </li>,
       )}
     </ul>;
