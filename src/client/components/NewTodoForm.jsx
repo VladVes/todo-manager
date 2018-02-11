@@ -2,7 +2,7 @@ import React from 'react'; // eslint-disable-line
 import { Field, reduxForm } from 'redux-form'; // eslint-disable-line
 import cn from 'classnames'; // eslint-disable-line
 
-class NewToDoForm extends React.Component {
+class NewTodoForm extends React.Component {
   addTask = (values) => {
     this.props.addTask(values);
     this.props.reset();
@@ -27,4 +27,4 @@ class NewToDoForm extends React.Component {
 
 export default reduxForm({
   form: 'newTask',
-})(NewTaskForm);
+})(NewTodoForm);

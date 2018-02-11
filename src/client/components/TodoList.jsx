@@ -2,7 +2,7 @@ import React from 'react'; // eslint-disable-line
 
 const filters = [['all', 'all'], ['active', 'active'], ['finished', 'finished']];
 
-export default class ToDoList extends React.Component {
+export default class TodoList extends React.Component {
   state = { activeFilter: 'all' };
 
   removeTask = id => (e) => {
