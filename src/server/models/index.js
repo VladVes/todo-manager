@@ -1,4 +1,6 @@
 import mongoose from 'mongoose';
+import task from './tasks';
+import user from './users';
 import getLogger from '../lib/log';
 import getConfig from '../../../config/config.js';
 
@@ -19,28 +21,11 @@ db.on('error', (e) => {
   throw new Error(e);
 });
 db.once('open', function() {
-  log('connected');
+  log('connected to mongoDb');
   console.log.bind(console, 'we\'re connected!');
 });
 
-const newTask = new Task({ name: 'First task', description: 'get the things done'});
+const Task = task(mongoose);
+const User = user(mongoose);
 
-console.log(newTask.show());
-
-const addTask = async (task) => {
-  try {
-    const savedTask = await task.save();
-    console.log('FROM mongoose SAVE!');
-    console.log(savedTask);
-    return savedTask;
-  } catch (e) {
-    log(err);
-    throw new Error(err);
-  }
-};
-
-const savedTask = addTask(newTask);
-
-db.mongoose = mongoose;
-
-export default db;
+export { Task, User };

@@ -38,7 +38,7 @@ export default (mongoose) => {
     },
   });
 
-  taskSchema.methods.getFullName = function() {
+  userSchema.methods.getFullName = function() {
     return `${this.firstName} ${this.lastName}`;
   };
 

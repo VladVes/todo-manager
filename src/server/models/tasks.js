@@ -16,7 +16,7 @@ export default (mongoose) => {
         validator(value) {
           return /hight|middle|low/i.test(value);
         },
-        message: `${value} is not a valid priority`,
+        message: `Priority is invalid`,
       },
       default: 'Low',
       required: [true, 'task should have a priority'],
@@ -27,7 +27,7 @@ export default (mongoose) => {
         validator(value) {
           return /new|active|resolved|closed/i.test(value);
         },
-        message: `${value} is not a valid status`,
+        message: `{VALUE} is not a valid status`,
       },
       default: 'New',
       required: [true, 'task should have a status'],
@@ -41,8 +41,7 @@ export default (mongoose) => {
         message: `Deadline can't be today`,
       },
       required: [true, 'task should have a deadline'],
-    }
-
+    },
   });
 
   taskSchema.methods.toString = function() {
