@@ -10,7 +10,7 @@ export default (mongoose) => {
         },
         message: `Not a valid email`,
       },
-      required: [true, 'task should have a content'],
+      required: [true, 'email required'],
     },
     firstName: {
       type: String,
@@ -20,7 +20,7 @@ export default (mongoose) => {
         },
         message: `First name can be only 30 characters long`,
       },
-      required: [true, 'task should have a priority'],
+      default: 'no name',
     },
     lastName: {
       type: String,
@@ -30,7 +30,7 @@ export default (mongoose) => {
         },
         message: `Last name can be only 30 characters long`,
       },
-      required: [true, 'task should have a status'],
+      default: 'no name',
     },
     passwordDigest: {
       type: String,

@@ -21,7 +21,7 @@ import getLogger from './lib/log';
 import getWebpackConfig from '../../webpack.config.babel';
 
 dotenv.config();
-console.log(process.cwd());
+//console.log(process.cwd());
 export default () => {
   const app = new Koa();
   const rollbar = new Rollbar('key'); // eslint-disable-line
@@ -40,7 +40,9 @@ export default () => {
       await next();
     } catch (err) {
       log('Error: ', err);
-      // rollbar.error(err, ctx.request);
+      if(process.env.NODE_ENV === 'production') {
+        rollbar.error(err, ctx.request);
+      }
     }
   });
   app.use(bodyParser());
