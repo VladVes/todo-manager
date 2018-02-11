@@ -1,6 +1,6 @@
 import start from './start';
-import dataTest from './dataTest';
+import tasks from './tasks';
 
-const controllers = [start, dataTest];
+const controllers = [start, tasks];
 
 export default router => controllers.forEach(f => f(router));
