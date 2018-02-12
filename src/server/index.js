@@ -14,14 +14,11 @@ import serve from 'koa-static';
 import koaLogger from 'koa-logger';
 import Pug from 'koa-pug';
 import KeyGrip from 'keygrip';
-import dotenv from 'dotenv';
 
 import addRoutes from './routes';
 import getLogger from './lib/log';
 import getWebpackConfig from '../../webpack.config.babel';
 
-dotenv.config();
-//console.log(process.cwd());
 export default () => {
   const app = new Koa();
   const rollbar = new Rollbar('key'); // eslint-disable-line
