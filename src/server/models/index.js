@@ -1,9 +1,11 @@
 import mongoose from 'mongoose';
+import dotenv from 'dotenv';
 import task from './tasks';
 import user from './users';
 import getLogger from '../lib/log';
-import getConfig from '../../../config/config.js';
+import getConfig from '../../../config/config';
 
+dotenv.config();
 const log = getLogger('DB');
 console.log(process.env.NODE_ENV);
 const config = getConfig()[process.env.NODE_ENV];
@@ -20,7 +22,7 @@ db.on('error', (e) => {
   console.error.bind(console, 'connection error:');
   throw new Error(e);
 });
-db.once('open', function() {
+db.once('open', () => {
   log('connected to mongoDb');
   console.log.bind(console, 'we\'re connected!');
 });

@@ -6,9 +6,14 @@ export default (mongoose) => {
         validator(value) {
           return value.length < 50;
         },
-        message: `ToDo can be only 50 characters length`,
+        message: 'ToDo can be only 50 characters length',
       },
       required: [true, 'task should have a content'],
+    },
+    order: {
+      type: Number,
+      unique: true,
+      required: [true, 'task should have an order!'],
     },
     priority: {
       type: String,
@@ -16,7 +21,7 @@ export default (mongoose) => {
         validator(value) {
           return /hight|middle|low/i.test(value);
         },
-        message: `Priority is invalid`,
+        message: 'Priority is invalid',
       },
       default: 'Low',
       required: [true, 'task should have a priority'],
@@ -27,7 +32,7 @@ export default (mongoose) => {
         validator(value) {
           return /new|active|resolved|closed/i.test(value);
         },
-        message: `{VALUE} is not a valid status`,
+        message: 'Status is not valid',
       },
       default: 'New',
       required: [true, 'task should have a status'],
@@ -38,8 +43,9 @@ export default (mongoose) => {
         validator(value) {
           return true; ///UPDATE validator!!!
         },
-        message: `Deadline can't be today`,
+        message: 'Deadline can\'t be today',
       },
+      default: 'tomorrow',
       required: [true, 'task should have a deadline'],
     },
   });
