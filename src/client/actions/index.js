@@ -18,10 +18,11 @@ export const addTaskRequest = createAction('TASK_ADD_REQUEST');
 export const addTaskSuccess = createAction('TASK_ADD_SUCCESS');
 export const addTaskFailure = createAction('TASK_ADD_FAILURE');
 
-export const addTask = (task) => async (dispatch) => {
+export const addTask = task => async (dispatch) => {
   dispatch(addTaskRequest());
   try {
     const response = await axios.post(routes.tasksUrl(), { task });
+    console.log("response data:", response.data);
     dispatch(addTaskSuccess({ task: response.data }));
   } catch (e) {
     dispatch(addTaskFailure());
@@ -33,7 +34,6 @@ export const fetchTasks = () => async (dispatch) => {
   try {
     const url = routes.tasksUrl();
     const response = await axios.get(url);
-    console.log("FROM FETCH TASKS: ", response.data);
     dispatch(fetchTasksSuccess({ tasks: response.data }));
   } catch (e) {
     dispatch(fetchTasksFailure());
@@ -47,6 +47,7 @@ export const removeTask = task => async (dispatch) => {
     await axios.delete(url);
     dispatch(removeTaskSuccess({ task }));
   } catch (e) {
+    console.log(e);
     dispatch(removeTaskFailure({ task }));
   }
 };
