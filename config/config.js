@@ -1,11 +1,11 @@
 export default () => ({
-  "development": {
+  development: {
     connectionString: 'mongodb://localhost/test',
   },
-  "test": {
+  test: {
     connectionString: 'mongodb://localhost/test',
   },
-  "production": {
+  production: {
     use_env_variable: 'DATABASE_URL',
   },
 });
