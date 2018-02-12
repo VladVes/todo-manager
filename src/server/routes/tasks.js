@@ -1,4 +1,4 @@
-import { Task } from '../models';
+import { Task, Queue } from '../models';
 
 export default (router) => {
   router.get('tasks', '/tasks', async (ctx) => {
@@ -13,7 +13,9 @@ export default (router) => {
       const { task } = ctx.request.body;
       const newTask = new Task(task);
       try {
+        const count = await Task.count();
         const savedTask = await newTask.save();
+        await Queue.create({ taskId: savedTask.id, order: count + 1 });
         ctx.body = savedTask;
       } catch (e) {
         throw new Error(e);

@@ -10,11 +10,6 @@ export default (mongoose) => {
       },
       required: [true, 'task should have a content'],
     },
-    order: {
-      type: Number,
-      unique: true,
-      required: [true, 'task should have an order!'],
-    },
     priority: {
       type: String,
       validate: {
