@@ -1,7 +1,14 @@
 import path from 'path';
 import webpack from 'webpack';
+import HtmlWebpackPlugin from 'html-webpack-plugin';
 
 export default () => ({
+  devtool: 'inline-source-map',
+  devServer: {
+    contentBase: path.join(__dirname, 'public'),
+    compress: true,
+    port: 8085,
+  },
   entry: {
     app: ['./src/client'],
     vendor: ['babel-polyfill', 'jquery', 'jquery-ujs', 'popper.js', 'bootstrap'],
@@ -18,7 +25,7 @@ export default () => ({
         exclude: /node_modules/,
         loader: 'babel-loader',
         include: path.join(__dirname, 'src/client'),
-        query: { presets: ['es2015', 'react', 'stage-0'] }
+        query: { presets: ['env', 'react', 'stage-0'] }
       },
       {
         test: /\.css$/,
@@ -26,19 +33,24 @@ export default () => ({
           'style-loader',
           { loader: 'css-loader', options: { importLoaders: 1 } },
           {
-           loader: 'postcss-loader',
-           options: {
-             plugins: () => [
-               require('precss'),
-               require('autoprefixer')()
-             ],
-           },
+            loader: 'postcss-loader',
+            options: {
+              plugins: () => [
+                require('precss'),
+                require('autoprefixer')()
+              ],
+            },
           },
         ],
       },
     ],
   },
   plugins: [
+    new HtmlWebpackPlugin({
+      template: './public/index.html',
+      filename: 'index.html',
+      inject: 'body',
+    }),
     new webpack.ProvidePlugin({
       $: 'jquery',
       jQuery: 'jquery',
@@ -53,7 +65,7 @@ export default () => ({
       // Passing Infinity just creates the commons chunk, but moves no modules into it.
       // In other words, we only put what's in the vendor entry definition in vendor-bundle.js
       minChunks: Infinity,
-    })//,
-    //new webpack.optimize.UglifyJsPlugin(),
+    }),
+    // new webpack.optimize.UglifyJsPlugin(),
   ],
 });
