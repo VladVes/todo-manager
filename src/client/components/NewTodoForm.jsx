@@ -12,15 +12,40 @@ class NewTodoForm extends React.Component {
     const { taskCreatingState } = this.props;
     const submitClasses = cn({
       'btn btn-primary btn-sm': true,
-      // BEGIN (write your solution here)
       disabled: taskCreatingState === 'requested',
     });
 
-    return <form action="" className="form-inline" onSubmit={this.props.handleSubmit(this.addTask)}>
+    return <form action="" className="" onSubmit={this.props.handleSubmit(this.addTask)}>
       <div className="form-group mx-3">
-        <Field name="text" required component="input" type="text" />
+        <label htmlFor="header">To do:</label>
+        <Field name="header" required component="input" type="text" className="form-control" id="header" />
+        <small id="headerHelp" className="form-text text-muted">To do can contain up to 50 characters</small>
       </div>
-      <button type="submit" className={submitClasses}>Add</button>
+      <div className="form-group mx-3">
+        <label htmlFor="priority">Priority:</label>
+        <Field name="priority" className="form-control" required component="select" id="priority">
+          <option value="Low">Low</option>
+          <option value="Medium">Medium</option>
+          <option value="Hight">Higth</option>
+        </Field>
+      </div>
+      <div className="form-group mx-3">
+        <label htmlFor="status">Status:</label>
+        <Field name="status" className="form-control" required component="select" id="status">
+          <option value="New">New</option>
+          <option value="Active">Active</option>
+          <option value="Resolved">Resolved</option>
+          <option value="Closed">Closed</option>
+        </Field>
+      </div>
+      <div className="form-group mx-3">
+        <label htmlFor="deadLine">Dead line:</label>
+        <Field name="deadLine" className="form-control" required component="input" type="text" id="deadLine" />
+        <small id="headerHelp" className="form-text text-muted">Select date</small>
+      </div>
+      <div className="form-group mx-3">
+        <button type="submit" className={submitClasses}>Add</button>
+      </div>
     </form>;
   }
 }
