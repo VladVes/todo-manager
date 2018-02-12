@@ -42,12 +42,13 @@ const tasksFetchingState = handleActions({
 
 const tasks = handleActions({
   [actions.fetchTasksSuccess](state, { payload }) {
-    console.log("FROM REDUCER: ", payload);
-    console.log("REDUCER - AFTER MAPKeys: ", mapKeys(payload.tasks, '_id'));
     return mapKeys(payload.tasks, '_id');
   },
   [actions.addTaskSuccess](state, { payload: { task } }) {
-    return { ...state, [task.id]: task };
+    console.log('Added TASK: ', task);
+    const newState = { ...state, [task._id]: task };
+    console.log('state: ', newState);
+    return newState;
   },
   [actions.removeTaskSuccess](state, { payload: { task } }) {
     return omit(state, task.id);
