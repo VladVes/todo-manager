@@ -8,7 +8,7 @@ export default (mongoose) => {
         validator(value) {
           return emailValidator.validate(value);
         },
-        message: `Not a valid email`,
+        message: 'Not a valid email',
       },
       required: [true, 'email required'],
     },
@@ -18,7 +18,7 @@ export default (mongoose) => {
         validator(value) {
           return value.length < 30;
         },
-        message: `First name can be only 30 characters long`,
+        message: 'First name can be only 30 characters long',
       },
       default: 'no name',
     },
@@ -26,21 +26,17 @@ export default (mongoose) => {
       type: String,
       validate: {
         validator(value) {
-            return value.length < 30;
+          return value.length < 30;
         },
-        message: `Last name can be only 30 characters long`,
+        message: 'Last name can be only 30 characters long',
       },
       default: 'no name',
     },
     passwordDigest: {
       type: String,
-    required: [true, 'password required'],
+      required: [true, 'password required'],
     },
   });
-
-  userSchema.methods.getFullName = function() {
-    return `${this.firstName} ${this.lastName}`;
-  };
 
   return mongoose.model('User', userSchema);
 };

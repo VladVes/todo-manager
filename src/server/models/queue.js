@@ -1,6 +1,11 @@
 export default (mongoose) => {
   const queueSchema = mongoose.Schema({
-    order: {
+    name: {
+      type: String,
+      required: true,
+      default: 'order',
+    },
+    data: {
       type: Array,
       default: [],
       required: true,
