@@ -14,7 +14,7 @@ export default (mongoose) => {
       type: String,
       validate: {
         validator(value) {
-          return /hight|middle|low/i.test(value);
+          return /hight|medium|low/i.test(value);
         },
         message: 'Priority is invalid',
       },

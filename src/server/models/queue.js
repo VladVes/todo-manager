@@ -1,15 +1,10 @@
 export default (mongoose) => {
   const queueSchema = mongoose.Schema({
-    taskId: {
-      type: String,
-      unique: true,
-      required: true,
-    },
     order: {
-      type: Number,
+      type: Array,
+      default: [],
       required: true,
     },
   });
-
   return mongoose.model('Queue', queueSchema);
 };

@@ -24,18 +24,18 @@ class NewTodoForm extends React.Component {
       <div className="form-group mx-3">
         <label htmlFor="priority">Priority:</label>
         <Field name="priority" className="form-control" required component="select" id="priority">
-          <option value="Low">Low</option>
-          <option value="Medium">Medium</option>
-          <option value="Hight">Higth</option>
+          <option value="low">Low</option>
+          <option value="middle">Middle</option>
+          <option value="hight">Higth</option>
         </Field>
       </div>
       <div className="form-group mx-3">
         <label htmlFor="status">Status:</label>
         <Field name="status" className="form-control" required component="select" id="status">
-          <option value="New">New</option>
-          <option value="Active">Active</option>
-          <option value="Resolved">Resolved</option>
-          <option value="Closed">Closed</option>
+          <option value="new">New</option>
+          <option value="active">Active</option>
+          <option value="resolved">Resolved</option>
+          <option value="closed">Closed</option>
         </Field>
       </div>
       <div className="form-group mx-3">

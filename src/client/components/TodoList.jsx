@@ -1,6 +1,6 @@
 import React from 'react';
 
-const filters = [['All', 'All'], ['New', 'New'], ['Active', 'Active'], ['Resolved', 'Resolved'], ['Closed', 'Closed']];
+const filters = [['all', 'all'], ['new', 'new'], ['active', 'active'], ['resolved', 'resolved'], ['closed', 'closed']];
 
 export default class TodoList extends React.Component {
   state = { activeFilter: 'All' };
@@ -38,7 +38,8 @@ export default class TodoList extends React.Component {
       <tbody>
         {tasks.map(({ _id, header, priority, status, deadLine }) => (
           <tr>
-            <th>{(status === 'Closed' ? <s>{header}</s> : header)}</th>
+            <th>order</th>
+            <th>{(status === 'closed' ? <s>{header}</s> : header)}</th>
             <th>{priority}</th>
             <th>{status}</th>
             <th>{deadLine}</th>
@@ -47,19 +48,6 @@ export default class TodoList extends React.Component {
       </tbody>
     </table>
     );
-
-    /*
-      <ul className="list-group">
-      {tasks.map(({ _id, header, priority, state, deadLine }) => (
-        <li key={_id} className="list-group-item d-flex justify-content-end">
-          <a href="#" className="app-toggle-state mr-3" onClick={this.toggleTaskState(_id)}>-</a>
-          <div className="mr-auto">{(state === 'Closed' ? <s>{header}</s> : header)}</div>
-          <div className="mr-auto">Priority: {priority}</div>
-          <div className="mr-auto">State: {state}</div>
-          <a href="#" className="app-remove-task" onClick={this.removeTask(_id)}>x</a>
-        </li>))}
-    </ul>;
-    */
   }
 
   renderFilter([state, name]) {

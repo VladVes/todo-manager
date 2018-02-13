@@ -11,11 +11,12 @@ export default (router) => {
   })
     .post('addNewTask', '/tasks', async (ctx) => {
       const { task } = ctx.request.body;
+      console.log("recived task: ", task);
       const newTask = new Task(task);
       try {
         const count = await Task.count();
         const savedTask = await newTask.save();
-        await Queue.create({ taskId: savedTask.id, order: count + 1 });
+        await Queue.create({ taskId: savedTask._id, order: count + 1 });
         ctx.body = savedTask;
       } catch (e) {
         throw new Error(e);
