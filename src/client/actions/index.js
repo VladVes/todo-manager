@@ -22,8 +22,7 @@ export const addTask = task => async (dispatch) => {
   dispatch(addTaskRequest());
   try {
     const response = await axios.post(routes.tasksUrl(), { task });
-    console.log("response data:", response.data);
-    dispatch(addTaskSuccess({ task: response.data }));
+    dispatch(addTaskSuccess({ data: response.data }));
   } catch (e) {
     dispatch(addTaskFailure());
   }
@@ -34,7 +33,7 @@ export const fetchTasks = () => async (dispatch) => {
   try {
     const url = routes.tasksUrl();
     const response = await axios.get(url);
-    dispatch(fetchTasksSuccess({ tasks: response.data }));
+    dispatch(fetchTasksSuccess({ data: response.data }));
   } catch (e) {
     dispatch(fetchTasksFailure());
   }
