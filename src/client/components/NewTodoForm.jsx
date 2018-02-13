@@ -25,7 +25,7 @@ class NewTodoForm extends React.Component {
         <label htmlFor="priority">Priority:</label>
         <Field name="priority" className="form-control" required component="select" id="priority">
           <option value="low">Low</option>
-          <option value="middle">Middle</option>
+          <option value="medium">Medium</option>
           <option value="hight">Higth</option>
         </Field>
       </div>

@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import React from 'react';
 
 const filters = [['all', 'all'], ['new', 'new'], ['active', 'active'], ['resolved', 'resolved'], ['closed', 'closed']];
@@ -19,15 +20,33 @@ export default class TodoList extends React.Component {
     this.setState({ activeFilter: state });
   }
 
+  upTaskOrder = id => (e) => {
+
+  };
+
+  downTaskOrder = id => (e) => {
+
+  };
+
   renderTasks() {
     const rawTasks = this.props.tasks;
+    const queue = this.props.queue;
+    const orderedTasks = queue.reduce((acc, id, index) => {
+      const task = _.find(rawTasks, t => _.isEqual(t._id, id));
+      if (!task) {
+        return acc;
+      }
+      task.order = index;
+      return [...acc, task];
+    }, []);
     const filter = this.state.activeFilter;
-    const tasks = filter === 'All' ? rawTasks : rawTasks.filter(t => t.status === filter);
+    const tasks = filter === 'All' ? orderedTasks : orderedTasks.filter(t => t.status === filter);
 
     return (
-      <table class="table table-striped table-dark">
+      <table className="table table-striped table-dark">
       <thead>
         <tr>
+          <th scope="col"></th>
           <th scope="col">#</th>
           <th scope="col">Header</th>
           <th scope="col">Priority</th>
@@ -36,9 +55,13 @@ export default class TodoList extends React.Component {
         </tr>
       </thead>
       <tbody>
-        {tasks.map(({ _id, header, priority, status, deadLine }) => (
+        {tasks.map(({ _id, order, header, priority, status, deadLine }) => (
           <tr>
-            <th>order</th>
+            <th>
+              <a href="#" className="app-remove-task" onClick={this.upTaskOrder(_id)}>up</a>
+              <a href="#" className="app-remove-task" onClick={this.downTaskOrder(_id)}>down</a>
+            </th>
+            <th>{order}</th>
             <th>{(status === 'closed' ? <s>{header}</s> : header)}</th>
             <th>{priority}</th>
             <th>{status}</th>
