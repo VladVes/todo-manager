@@ -11,7 +11,7 @@ export default () => ({
   },
   entry: {
     app: ['./src/client'],
-    vendor: ['babel-polyfill', 'jquery', 'jquery-ujs', 'popper.js', 'bootstrap'],
+    vendor: ['babel-polyfill', 'jquery', 'jquery-ujs', 'popper.js', 'bootstrap', 'fontawesome'],
   },
   output: {
     filename: 'bundle.js',
@@ -46,11 +46,13 @@ export default () => ({
     ],
   },
   plugins: [
+    /*
     new HtmlWebpackPlugin({
       template: './public/index.html',
       filename: 'index.html',
       inject: 'body',
     }),
+    */
     new webpack.ProvidePlugin({
       $: 'jquery',
       jQuery: 'jquery',
