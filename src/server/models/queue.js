@@ -7,8 +7,8 @@ export default (mongoose) => {
     },
     data: {
       type: Array,
-      default: [],
       required: true,
+      default: [],
     },
   });
   return mongoose.model('Queue', queueSchema);
