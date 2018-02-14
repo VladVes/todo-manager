@@ -18,6 +18,10 @@ export const addTaskRequest = createAction('TASK_ADD_REQUEST');
 export const addTaskSuccess = createAction('TASK_ADD_SUCCESS');
 export const addTaskFailure = createAction('TASK_ADD_FAILURE');
 
+export const taskOrderingRequest = createAction('TASK_ORDER_REQUEST');
+export const taskOrderingSuccess = createAction('TASK_ORDER_SUCCESS');
+export const taskOrderingFailure = createAction('TASK_ORDER_FAILURE');
+
 export const addTask = task => async (dispatch) => {
   dispatch(addTaskRequest());
   try {
@@ -43,10 +47,23 @@ export const removeTask = task => async (dispatch) => {
   dispatch(removeTaskRequest());
   try {
     const url = routes.taskUrl(task.id);
-    await axios.delete(url);
-    dispatch(removeTaskSuccess({ task }));
+    const responde = await axios.delete(url);
+    dispatch(removeTaskSuccess({ task, data: responde.data }));
   } catch (e) {
     console.log(e);
     dispatch(removeTaskFailure({ task }));
+  }
+};
+
+export const changeTaskOrder = (order) => async (dispatch) => {
+  dispatch(taskOrderingRequest());
+  try {
+    const url = routes.changeTaskOrderUrl(order.taskId);
+    const response = await axios.post(url, { order });
+    console.log("Task Order recived: ", response.data);
+    dispatch(taskOrderingSuccess({ data: response.data }));
+  } catch (e) {
+    console.log(e);
+    dispatch(taskOrderingFailure());
   }
 };
