@@ -40,6 +40,18 @@ const tasksFetchingState = handleActions({
   },
 }, 'none');
 
+const taskOrderingState = handleActions({
+  [actions.taskOrderingRequest]() {
+    return 'requested';
+  },
+  [actions.taskOrderingFailure]() {
+    return 'failed';
+  },
+  [actions.taskOrderingSuccess]() {
+    return 'successed';
+  },
+}, 'none');
+
 const tasks = handleActions({
   [actions.fetchTasksSuccess](state, { payload }) {
     return mapKeys(payload.data.tasks, '_id');
@@ -65,11 +77,15 @@ const tasks = handleActions({
 
 const queue = handleActions({
   [actions.fetchTasksSuccess](state, { payload }) {
-    console.log("Current QUEUE: ", payload.data.queue);
     return payload.data.queue;
   },
   [actions.addTaskSuccess](state, { payload: { data } }) {
-    console.log("Add task QUEUE: ", data.queue);
+    return data.queue;
+  },
+  [actions.taskOrderingSuccess](state, { payload: { data } }) {
+    return data.queue;
+  },
+  [actions.removeTaskSuccess](state, { payload: { data } }) {
     return data.queue;
   },
 }, []);
@@ -78,6 +94,7 @@ export default combineReducers({
   taskCreatingState,
   taskRemovingState,
   tasksFetchingState,
+  taskOrderingState,
   tasks,
   queue,
   form: formReducer,
