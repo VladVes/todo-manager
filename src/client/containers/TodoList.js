@@ -8,6 +8,7 @@ const Container = connect(
     const props = {
       tasks: tasksSelector(state),
       queue: queueSelector(state),
+      taskOrderingState: state.taskOrderingState,
     };
     return props;
   },
