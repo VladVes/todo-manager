@@ -1,5 +1,7 @@
 import _ from 'lodash';
 import React from 'react';
+import fontawesome;
+import cn from 'classnames'; // eslint-disable-line
 
 const filters = [['all', 'all'], ['new', 'new'], ['active', 'active'], ['resolved', 'resolved'], ['closed', 'closed']];
 
@@ -20,15 +22,25 @@ export default class TodoList extends React.Component {
     this.setState({ activeFilter: state });
   }
 
-  upTaskOrder = id => (e) => {
+  taskOrderUp = (taskId, pos) => (e) => {
+    e.preventDefault();
+    if (pos > 1) {
+      this.props.changeTaskOrder({ taskId, index: pos - 1, move: 'up' });
+    }
+  }
 
-  };
-
-  downTaskOrder = id => (e) => {
-
-  };
+  taskOrderDown = (taskId, pos) => (e) => {
+    e.preventDefault();
+    if (pos < this.props.queue.length) {
+      this.props.changeTaskOrder({ taskId, index: pos - 1, move: 'down' });
+    }
+  }
 
   renderTasks() {
+    const buttonClasses = cn({
+      'btn btn-secondary fas fa-angle-up': true,
+      disabled: this.props.taskOrderingState === 'requested',
+    });
     const rawTasks = this.props.tasks;
     const queue = this.props.queue;
     const orderedTasks = queue.reduce((acc, id, index) => {
@@ -36,7 +48,7 @@ export default class TodoList extends React.Component {
       if (!task) {
         return acc;
       }
-      task.order = index;
+      task.order = index + 1;
       return [...acc, task];
     }, []);
     const filter = this.state.activeFilter;
@@ -58,8 +70,10 @@ export default class TodoList extends React.Component {
         {tasks.map(({ _id, order, header, priority, status, deadLine }) => (
           <tr>
             <th>
-              <a href="#" className="app-remove-task" onClick={this.upTaskOrder(_id)}>up</a>
-              <a href="#" className="app-remove-task" onClick={this.downTaskOrder(_id)}>down</a>
+              <div className="btn-group-sm" role="group" aria-label="Basic example">
+                <button type="button" className={buttonClasses} onClick={this.taskOrderUp(_id, order)}>Up</button>
+                <button type="button" className={buttonClasses} onClick={this.taskOrderDown(_id, order)}>Down</button>
+              </div>
             </th>
             <th>{order}</th>
             <th>{(status === 'closed' ? <s>{header}</s> : header)}</th>
