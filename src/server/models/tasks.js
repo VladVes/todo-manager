@@ -4,7 +4,8 @@ export default (mongoose) => {
       type: String,
       validate: {
         validator(value) {
-          return value.length < 50;
+          console.log(value.length);
+          return value.length < 51;
         },
         message: 'ToDo can be only 50 characters length',
       },

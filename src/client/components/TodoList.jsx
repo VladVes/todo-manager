@@ -1,14 +1,21 @@
 import _ from 'lodash';
 import React from 'react';
-import fontawesome;
+import FontAwesomeIcon from '@fortawesome/react-fontawesome';// eslint-disable-line
+import * as icons from '@fortawesome/fontawesome-free-solid'// eslint-disable-line
+
 import cn from 'classnames'; // eslint-disable-line
 
 const filters = [['all', 'all'], ['new', 'new'], ['active', 'active'], ['resolved', 'resolved'], ['closed', 'closed']];
 
 export default class TodoList extends React.Component {
-  state = { activeFilter: 'All' };
+  state = { activeFilter: 'all' };
 
   removeTask = id => (e) => {
+    e.preventDefault();
+    this.props.removeTask({ id });
+  }
+
+  editTask = id => (e) => {
     e.preventDefault();
     this.props.removeTask({ id });
   }
@@ -38,7 +45,7 @@ export default class TodoList extends React.Component {
 
   renderTasks() {
     const buttonClasses = cn({
-      'btn btn-secondary fas fa-angle-up': true,
+      'btn btn-secondary': true,
       disabled: this.props.taskOrderingState === 'requested',
     });
     const rawTasks = this.props.tasks;
@@ -51,39 +58,56 @@ export default class TodoList extends React.Component {
       task.order = index + 1;
       return [...acc, task];
     }, []);
+
     const filter = this.state.activeFilter;
-    const tasks = filter === 'All' ? orderedTasks : orderedTasks.filter(t => t.status === filter);
+    const tasks = filter === 'all' ? orderedTasks : orderedTasks.filter(t => t.status === filter);
 
     return (
-      <table className="table table-striped table-dark">
-      <thead>
-        <tr>
-          <th scope="col"></th>
-          <th scope="col">#</th>
-          <th scope="col">Header</th>
-          <th scope="col">Priority</th>
-          <th scope="col">Status</th>
-          <th scope="col">Deadline</th>
-        </tr>
-      </thead>
-      <tbody>
-        {tasks.map(({ _id, order, header, priority, status, deadLine }) => (
+      <div class="table-responsive-sm">
+        <table className="table table-dark">
+        <thead>
           <tr>
-            <th>
-              <div className="btn-group-sm" role="group" aria-label="Basic example">
-                <button type="button" className={buttonClasses} onClick={this.taskOrderUp(_id, order)}>Up</button>
-                <button type="button" className={buttonClasses} onClick={this.taskOrderDown(_id, order)}>Down</button>
-              </div>
-            </th>
-            <th>{order}</th>
-            <th>{(status === 'closed' ? <s>{header}</s> : header)}</th>
-            <th>{priority}</th>
-            <th>{status}</th>
-            <th>{deadLine}</th>
-            <a href="#" className="app-remove-task" onClick={this.removeTask(_id)}>x</a>
-          </tr>))}
-      </tbody>
-    </table>
+            <th></th>
+            <th>#</th>
+            <th>Header</th>
+            <th>Priority</th>
+            <th>Status</th>
+            <th>Deadline</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          {tasks.map(({ _id, order, header, priority, status, deadLine }) => (
+            <tr>
+              <th>
+                <div class="btn-group btn-group-sm" role="group" aria-label="First group">
+                  <button type="button" className={buttonClasses} onClick={this.taskOrderUp(_id, order)}>
+                    <FontAwesomeIcon icon={icons.faArrowUp} />
+                  </button>
+                  <button type="button" className={buttonClasses} onClick={this.taskOrderDown(_id, order)}>
+                    <FontAwesomeIcon icon={icons.faArrowDown} />
+                  </button>
+                </div>
+              </th>
+              <th>{order}</th>
+              <th>{(status === 'closed' ? <s>{header}</s> : header)}</th>
+              <th>{priority}</th>
+              <th>{status}</th>
+              <th>{deadLine}</th>
+              <th>
+                <div class="btn-group btn-group-sm" role="group" aria-label="First group">
+                  <button type="button" className={buttonClasses}>
+                    <FontAwesomeIcon icon={icons.faEdit} />
+                  </button>
+                  <button type="button" className={buttonClasses} onClick={this.removeTask(_id)}>
+                    <FontAwesomeIcon icon={icons.faTrash} onClick={this.editTask(_id)}/>
+                  </button>
+                </div>
+              </th>
+            </tr>))}
+        </tbody>
+      </table>
+    </div>
     );
   }
 

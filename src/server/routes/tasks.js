@@ -10,7 +10,7 @@ export default (router) => {
     } catch (e) {
       throw new Error(e);
     }
-    })
+  })
     .post('addNewTask', '/tasks', async (ctx) => {
       const { task } = ctx.request.body;
       const newTask = new Task(task);
@@ -29,10 +29,8 @@ export default (router) => {
     })
     .post('taskOrdering', '/tasks/:id/ordering', async (ctx) => {
       const { order } = ctx.request.body;
-      console.log('ORDER DATA RECIVED: ', order);
       try {
         const task = await Task.findOne({ _id: order.taskId });
-        console.log('TASK FiNDED: ', task);
         const queue = await Queue.findOne({ name: 'order' });
         const prevIndex = order.index;
         const newData = queue.data;
@@ -51,17 +49,30 @@ export default (router) => {
           }
         }
         const movedValue = newData[newIndex];
-        console.log("DATA TO MOVE: ", movedValue);
         newData[newIndex] = task._id;
         newData[prevIndex] = movedValue;
-        console.log("DATA TO SAVE: ", newData);
         await queue.remove();
         const newQueue = await Queue.create({ name: 'order', data: newData });
-        console.log("DATA AFTER SAVE: ", newQueue.data);
         ctx.body = { queue: newQueue.data };
       } catch (e) {
         throw new Error(e);
       }
+    })
+    .patch('updateTask', '/tasks/:id', async (ctx) => {
+      const { id } = ctx.params;
+      /*
+      try {
+        const task = await Task.findById(id);
+        await task.remove();
+        const queue = await Queue.findOne({ name: 'order' });
+        const updatedData = queue.data.filter(item => !_.isEqual(item, task._id));
+        queue.set({ data: updatedData });
+        const updatedQueue = await queue.save();
+        ctx.body = { queue: updatedQueue.data };
+      } catch (e) {
+        throw new Error(e);
+      }
+      */
     })
     .delete('deleteTask', '/tasks/:id', async (ctx) => {
       const { id } = ctx.params;

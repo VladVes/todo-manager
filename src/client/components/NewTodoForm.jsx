@@ -1,6 +1,7 @@
 import React from 'react'; // eslint-disable-line
 import { Field, reduxForm } from 'redux-form'; // eslint-disable-line
 import cn from 'classnames'; // eslint-disable-line
+import { renderField, required, maxLength50, normalizeDate } from './fieldSupport.jsx';
 
 class NewTodoForm extends React.Component {
   addTask = (values) => {
@@ -17,8 +18,10 @@ class NewTodoForm extends React.Component {
 
     return <form action="" className="" onSubmit={this.props.handleSubmit(this.addTask)}>
       <div className="form-group mx-3">
-        <label htmlFor="header">To do:</label>
-        <Field name="header" required component="input" type="text" className="form-control" id="header" />
+        <Field name="header" type="text" id="header"
+          component={renderField} label="To do: "
+          validate={[maxLength50, required]}
+        />
         <small id="headerHelp" className="form-text text-muted">To do can contain up to 50 characters</small>
       </div>
       <div className="form-group mx-3">
@@ -39,9 +42,12 @@ class NewTodoForm extends React.Component {
         </Field>
       </div>
       <div className="form-group mx-3">
-        <label htmlFor="deadLine">Dead line:</label>
-        <Field name="deadLine" className="form-control" required component="input" type="text" id="deadLine" />
-        <small id="headerHelp" className="form-text text-muted">Select date</small>
+        <Field name="deadLine" type="text"
+          component={renderField} label="Deadline: "
+          validate={required}
+          normalize={normalizeDate}
+        />
+        <small id="headerHelp" className="form-text text-muted">Enter date (dd.mm.yy)</small>
       </div>
       <div className="form-group mx-3">
         <button type="submit" className={submitClasses}>Add</button>

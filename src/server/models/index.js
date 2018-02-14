@@ -8,7 +8,6 @@ import getConfig from '../../../config/config';
 
 dotenv.config();
 const log = getLogger('DB');
-console.log(process.env.NODE_ENV);
 const config = getConfig()[process.env.NODE_ENV];
 
 if (config.use_env_variable) {
@@ -20,12 +19,10 @@ if (config.use_env_variable) {
 const db = mongoose.connection;
 db.on('error', (e) => {
   log('db connection error', e);
-  console.error.bind(console, 'connection error:');
   throw new Error(e);
 });
 db.once('open', () => {
   log('connected to mongoDb');
-  console.log.bind(console, 'we\'re connected!');
 });
 
 const Task = task(mongoose);
