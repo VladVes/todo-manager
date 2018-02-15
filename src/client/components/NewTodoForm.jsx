@@ -1,8 +1,8 @@
 import React from 'react'; // eslint-disable-line
 import { Field, reduxForm } from 'redux-form'; // eslint-disable-line
 import cn from 'classnames'; // eslint-disable-line
-import { required, maxLength50, normalizeDate } from './validators';
-import { renderField, renderDatePicker } from './inputs.jsx'
+import { required, maxLength50, laterThenToday } from './validators';
+import { renderField, renderDatePicker } from './inputs.jsx';
 
 class NewTodoForm extends React.Component {
   addTask = (values) => {
@@ -43,17 +43,13 @@ class NewTodoForm extends React.Component {
         </Field>
       </div>
       <div className="form-group mx-3">
-        <Field name="deadLine" type="text"
-          component={renderDatePicker} label="Deadline: "
-          validate={required}
-        />
-        <small id="headerHelp" className="form-text text-muted">Enter date (dd.mm.yy)</small>
+        <Field name="deadLine" component={renderDatePicker} label="Deadline: " validate={[required, laterThenToday]} />
+      <small id="headerHelp" className="form-text text-muted">Date format: MM.DD.YYYY</small>
       </div>
       <div className="form-group mx-3">
         <button type="submit" className={submitClasses}>Add</button>
       </div>
     </form>;
-
   }
 }
 

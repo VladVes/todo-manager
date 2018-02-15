@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import React from 'react';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';// eslint-disable-line
-import { faArrowUp, faArrowDown, faEdit, faTrash} as icons from '@fortawesome/fontawesome-free-solid'// eslint-disable-line
+import { faArrowUp, faArrowDown, faEdit, faTrash} from '@fortawesome/fontawesome-free-solid'// eslint-disable-line
 
 import cn from 'classnames'; // eslint-disable-line
 
