@@ -22,6 +22,8 @@ export const taskOrderingRequest = createAction('TASK_ORDER_REQUEST');
 export const taskOrderingSuccess = createAction('TASK_ORDER_SUCCESS');
 export const taskOrderingFailure = createAction('TASK_ORDER_FAILURE');
 
+export const toggleConfirmState = createAction('CONFIRM_STATE_TOGGLE');
+
 export const addTask = task => async (dispatch) => {
   dispatch(addTaskRequest());
   try {
@@ -44,6 +46,7 @@ export const fetchTasks = () => async (dispatch) => {
 };
 
 export const removeTask = task => async (dispatch) => {
+  console.log('REMOVE TASK - DATA FROM CONFIRMATOR: ', task.confirmator);
   dispatch(removeTaskRequest());
   try {
     const url = routes.taskUrl(task.id);

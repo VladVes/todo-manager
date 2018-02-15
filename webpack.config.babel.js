@@ -25,7 +25,7 @@ export default () => ({
         exclude: /node_modules/,
         loader: 'babel-loader',
         include: path.join(__dirname, 'src/client'),
-        query: { presets: ['env', 'react', 'stage-0'] }
+        query: { presets: ['env', 'react', 'stage-0'] },
       },
       {
         test: /\.css$/,
@@ -36,8 +36,8 @@ export default () => ({
             loader: 'postcss-loader',
             options: {
               plugins: () => [
-                require('precss'),
-                require('autoprefixer')()
+                require('precss'), // eslint-disable-line
+                require('autoprefixer')() // eslint-disable-line
               ],
             },
           },

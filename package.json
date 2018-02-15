@@ -104,6 +104,7 @@
     "postcss-loader": "^2.0.9",
     "precss": "^2.0.0",
     "react": "*",
+    "react-confirm-bootstrap": "^5.1.1",
     "react-datepicker": "^1.1.0",
     "react-day-picker": "^7.0.7",
     "react-dom": "*",

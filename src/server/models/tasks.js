@@ -4,7 +4,6 @@ export default (mongoose) => {
       type: String,
       validate: {
         validator(value) {
-          console.log(value.length);
           return value.length < 51;
         },
         message: 'ToDo can be only 50 characters length',
@@ -37,7 +36,9 @@ export default (mongoose) => {
       type: String,
       validate: {
         validator(value) {
-          return true; ///UPDATE validator!!!
+          const now = new Date();
+          const recived = new Date(value);
+          return now.getTime() < recived.getTime();
         },
         message: 'Deadline can\'t be today',
       },
@@ -45,10 +46,6 @@ export default (mongoose) => {
       required: [true, 'task should have a deadline'],
     },
   });
-
-  taskSchema.methods.toString = function() {
-    return `Task is: ${this.header}`;
-  };
 
   return mongoose.model('Task', taskSchema);
 };

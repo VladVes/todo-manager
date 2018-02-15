@@ -20,7 +20,7 @@ export default (router) => {
         if (!queue) {
           queue = await Queue.create({ name: 'order', data: [] });
         }
-        queue.set({ data: [...queue.data, savedTask._id] });
+        queue.set({ data: [...queue.data, savedTask._id] }); // eslint-disable-line
         const savedQueue = await queue.save();
         ctx.body = { task: savedTask, queue: savedQueue.data };
       } catch (e) {
@@ -49,7 +49,7 @@ export default (router) => {
           }
         }
         const movedValue = newData[newIndex];
-        newData[newIndex] = task._id;
+        newData[newIndex] = task._id; // eslint-disable-line
         newData[prevIndex] = movedValue;
         await queue.remove();
         const newQueue = await Queue.create({ name: 'order', data: newData });
@@ -80,7 +80,7 @@ export default (router) => {
         const task = await Task.findById(id);
         await task.remove();
         const queue = await Queue.findOne({ name: 'order' });
-        const updatedData = queue.data.filter(item => !_.isEqual(item, task._id));
+        const updatedData = queue.data.filter(item => !_.isEqual(item, task._id)); // eslint-disable-line
         queue.set({ data: updatedData });
         const updatedQueue = await queue.save();
         ctx.body = { queue: updatedQueue.data };

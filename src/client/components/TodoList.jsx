@@ -2,17 +2,18 @@ import _ from 'lodash';
 import React from 'react';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';// eslint-disable-line
 import { faArrowUp, faArrowDown, faEdit, faTrash} from '@fortawesome/fontawesome-free-solid'// eslint-disable-line
-
 import cn from 'classnames'; // eslint-disable-line
+import Confirmator from '../containers/Confirmator'; // eslint-disable-line
 
 const filters = [['all', 'all'], ['new', 'new'], ['active', 'active'], ['resolved', 'resolved'], ['closed', 'closed']];
 
 export default class TodoList extends React.Component {
   state = { activeFilter: 'all' };
 
-  removeTask = id => (e) => {
+  getConfirmation = id => (e) => {
     e.preventDefault();
-    this.props.removeTask({ id });
+    console.log('FROM GET CONFIRMATION!!!');
+    this.props.toggleConfirmState({ id });
   }
 
   editTask = id => (e) => {
@@ -49,9 +50,9 @@ export default class TodoList extends React.Component {
       disabled: this.props.taskOrderingState === 'requested',
     });
     const rawTasks = this.props.tasks;
-    const queue = this.props.queue;
+    const { queue } = this.props;
     const orderedTasks = queue.reduce((acc, id, index) => {
-      const task = _.find(rawTasks, t => _.isEqual(t._id, id));
+      const task = _.find(rawTasks, t => _.isEqual(t._id, id)); // eslint-disable-line
       if (!task) {
         return acc;
       }
@@ -63,50 +64,53 @@ export default class TodoList extends React.Component {
     const tasks = filter === 'all' ? orderedTasks : orderedTasks.filter(t => t.status === filter);
 
     return (
-      <div class="table-responsive-sm">
-        <table className="table table-dark">
-        <thead>
-          <tr>
-            <th></th>
-            <th>#</th>
-            <th>Header</th>
-            <th>Priority</th>
-            <th>Status</th>
-            <th>Deadline</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          {tasks.map(({ _id, order, header, priority, status, deadLine }) => (
+      <div>
+        <div class="table-responsive-sm">
+          <table className="table table-dark">
+          <thead>
             <tr>
-              <th>
-                <div class="btn-group btn-group-sm" role="group" aria-label="First group">
-                  <button type="button" className={buttonClasses} onClick={this.taskOrderUp(_id, order)}>
-                    <FontAwesomeIcon icon={faArrowUp} />
-                  </button>
-                  <button type="button" className={buttonClasses} onClick={this.taskOrderDown(_id, order)}>
-                    <FontAwesomeIcon icon={faArrowDown} />
-                  </button>
-                </div>
-              </th>
-              <th>{order}</th>
-              <th>{(status === 'closed' ? <s>{header}</s> : header)}</th>
-              <th>{priority}</th>
-              <th>{status}</th>
-              <th>{deadLine}</th>
-              <th>
-                <div class="btn-group btn-group-sm" role="group" aria-label="First group">
-                  <button type="button" className={buttonClasses}>
-                    <FontAwesomeIcon icon={faEdit} />
-                  </button>
-                  <button type="button" className={buttonClasses} onClick={this.removeTask(_id)}>
-                    <FontAwesomeIcon icon={faTrash} onClick={this.editTask(_id)}/>
-                  </button>
-                </div>
-              </th>
-            </tr>))}
-        </tbody>
-      </table>
+              <th></th>
+              <th>#</th>
+              <th>Header</th>
+              <th>Priority</th>
+              <th>Status</th>
+              <th>Deadline</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {tasks.map(({ _id, order, header, priority, status, deadLine }) => ( // eslint-disable-line
+              <tr>
+                <th>
+                  <div class="btn-group btn-group-sm" role="group" aria-label="First group">
+                    <button type="button" className={buttonClasses} onClick={this.taskOrderUp(_id, order)}>
+                      <FontAwesomeIcon icon={faArrowUp} />
+                    </button>
+                    <button type="button" className={buttonClasses} onClick={this.taskOrderDown(_id, order)}>
+                      <FontAwesomeIcon icon={faArrowDown} />
+                    </button>
+                  </div>
+                </th>
+                <th>{order}</th>
+                <th>{(status === 'closed' ? <s>{header}</s> : header)}</th>
+                <th>{priority}</th>
+                <th>{status}</th>
+                <th>{deadLine}</th>
+                <th>
+                  <div class="btn-group btn-group-sm" role="group" aria-label="First group">
+                    <button type="button" className={buttonClasses}>
+                      <FontAwesomeIcon icon={faEdit} />
+                    </button>
+                    <button type="button" className={buttonClasses} onClick={this.getConfirmation(_id)}>
+                      <FontAwesomeIcon icon={faTrash} onClick={this.editTask(_id)}/>
+                    </button>
+                  </div>
+                </th>
+              </tr>))}
+          </tbody>
+        </table>
+      </div>
+      {this.props.confirmation ? <Confirmator /> : null}
     </div>
     );
   }
@@ -119,9 +123,9 @@ export default class TodoList extends React.Component {
   render() {
     const { tasks } = this.props;
 
-    //if (tasks.length === 0) {
-    //  return null;
-    //}
+    if (tasks.length === 0) {
+      return null;
+    }
 
     return <div className="mt-3">
       <h1>ToDo list:</h1>

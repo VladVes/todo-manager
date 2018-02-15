@@ -1,12 +1,12 @@
-import React from 'react'; // eslint-disable-line;
+import React from 'react'; // eslint-disable-line
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';// eslint-disable-line
 import { faExclamationCircle } from '@fortawesome/fontawesome-free-solid';// eslint-disable-line
-import DatePicker from 'react-datepicker';
+import DatePicker from 'react-datepicker'; // eslint-disable-line
 import moment from 'moment';
 
 import 'react-datepicker/dist/react-datepicker.css';
 
-export const renderField = ({ input, label, type, meta: { touched, error, warning } }) => (
+export const renderField = ({ input, label, type, meta: { touched, error, warning } }) => ( // eslint-disable-line
   <div>
     <label>{label}</label>
     <div>

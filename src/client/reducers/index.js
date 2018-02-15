@@ -52,12 +52,24 @@ const taskOrderingState = handleActions({
   },
 }, 'none');
 
+const confirmationState = handleActions({
+  [actions.removeTaskSuccess](state) {
+    console.log('FROM confirmationState reducer!!!!');
+    return { ...state, confirm: false };
+  },
+  [actions.toggleConfirmState](state, { payload: { id } }) {
+    console.log('FROM confirmationState toggle action reducer!!!!', state);
+    const confirm = !state.confirm;
+    return { confirm, data: id };
+  },
+}, { confirm: false, data: null });
+
 const tasks = handleActions({
   [actions.fetchTasksSuccess](state, { payload }) {
     return mapKeys(payload.data.tasks, '_id');
   },
   [actions.addTaskSuccess](state, { payload: { data } }) {
-    return { ...state, [data.task._id]: data.task };
+    return { ...state, [data.task._id]: data.task }; // eslint-disable-line
   },
   [actions.removeTaskSuccess](state, { payload: { task } }) {
     return omit(state, task.id);
@@ -95,6 +107,7 @@ export default combineReducers({
   taskRemovingState,
   tasksFetchingState,
   taskOrderingState,
+  confirmationState,
   tasks,
   queue,
   form: formReducer,
