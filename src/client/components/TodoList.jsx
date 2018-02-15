@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import React from 'react';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';// eslint-disable-line
-import * as icons from '@fortawesome/fontawesome-free-solid'// eslint-disable-line
+import { faArrowUp, faArrowDown, faEdit, faTrash} as icons from '@fortawesome/fontawesome-free-solid'// eslint-disable-line
 
 import cn from 'classnames'; // eslint-disable-line
 
@@ -82,10 +82,10 @@ export default class TodoList extends React.Component {
               <th>
                 <div class="btn-group btn-group-sm" role="group" aria-label="First group">
                   <button type="button" className={buttonClasses} onClick={this.taskOrderUp(_id, order)}>
-                    <FontAwesomeIcon icon={icons.faArrowUp} />
+                    <FontAwesomeIcon icon={faArrowUp} />
                   </button>
                   <button type="button" className={buttonClasses} onClick={this.taskOrderDown(_id, order)}>
-                    <FontAwesomeIcon icon={icons.faArrowDown} />
+                    <FontAwesomeIcon icon={faArrowDown} />
                   </button>
                 </div>
               </th>
@@ -97,10 +97,10 @@ export default class TodoList extends React.Component {
               <th>
                 <div class="btn-group btn-group-sm" role="group" aria-label="First group">
                   <button type="button" className={buttonClasses}>
-                    <FontAwesomeIcon icon={icons.faEdit} />
+                    <FontAwesomeIcon icon={faEdit} />
                   </button>
                   <button type="button" className={buttonClasses} onClick={this.removeTask(_id)}>
-                    <FontAwesomeIcon icon={icons.faTrash} onClick={this.editTask(_id)}/>
+                    <FontAwesomeIcon icon={faTrash} onClick={this.editTask(_id)}/>
                   </button>
                 </div>
               </th>
