@@ -1,29 +1,50 @@
 import _ from 'lodash';
 import React from 'react';
+import Modal from 'react-modal';; // eslint-disable-line
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';// eslint-disable-line
 import { faArrowUp, faArrowDown, faEdit, faTrash} from '@fortawesome/fontawesome-free-solid'// eslint-disable-line
 import cn from 'classnames'; // eslint-disable-line
-import Confirmator from '../containers/Confirmator'; // eslint-disable-line
+
 
 const filters = [['all', 'all'], ['new', 'new'], ['active', 'active'], ['resolved', 'resolved'], ['closed', 'closed']];
+const customStyles = {
+  content : {
+    top                   : '50%',
+    left                  : '50%',
+    right                 : 'auto',
+    bottom                : 'auto',
+    marginRight           : '-50%',
+    transform             : 'translate(-50%, -50%)'
+  }
+};
 
 export default class TodoList extends React.Component {
-  state = { activeFilter: 'all' };
+  state = {
+    activeFilter: 'all',
+    modalIsOpen: false,
+    taskId: null,
+  };
 
-  getConfirmation = id => (e) => {
+  getConfirmation = (id) => (e) => {
     e.preventDefault();
-    console.log('FROM GET CONFIRMATION!!!');
-    this.props.toggleConfirmState({ id });
+    this.setState({ modalIsOpen: true, taskId: id });
+  }
+
+  removeTask = () => {
+    this.props.removeTask({ id: this.state.taskId });
+    this.setState({ modalIsOpen: false, taskId: null });
+  }
+
+  afterOpenModal = () => {
+    this.subtitle.style.color = '#f00';
+  }
+
+  closeModal = () => {
+    this.setState({modalIsOpen: false});
   }
 
   editTask = id => (e) => {
     e.preventDefault();
-    this.props.removeTask({ id });
-  }
-
-  toggleTaskState = id => (e) => {
-    e.preventDefault();
-    this.props.toggleTaskState({ id });
   }
 
   applyFilter(state) {
@@ -98,11 +119,11 @@ export default class TodoList extends React.Component {
                 <th>{deadLine}</th>
                 <th>
                   <div class="btn-group btn-group-sm" role="group" aria-label="First group">
-                    <button type="button" className={buttonClasses}>
+                    <button type="button" className={buttonClasses} onClick={this.editTask(_id)}>
                       <FontAwesomeIcon icon={faEdit} />
                     </button>
                     <button type="button" className={buttonClasses} onClick={this.getConfirmation(_id)}>
-                      <FontAwesomeIcon icon={faTrash} onClick={this.editTask(_id)}/>
+                      <FontAwesomeIcon icon={faTrash} />
                     </button>
                   </div>
                 </th>
@@ -110,7 +131,17 @@ export default class TodoList extends React.Component {
           </tbody>
         </table>
       </div>
-      {this.props.confirmation ? <Confirmator /> : null}
+      <Modal
+         isOpen={this.state.modalIsOpen}
+         onAfterOpen={this.afterOpenModal}
+         onRequestClose={this.closeModal}
+         style={customStyles}
+         contentLabel="Task delete confirmation"
+       >
+         <h2 ref={subtitle => this.subtitle = subtitle}>Are you sure ?</h2>
+         <button className="btn btn-secondary mx-3" onClick={this.closeModal}>Close</button>
+         <button className="btn btn-danger mx-3" onClick={this.removeTask}>Delete</button>
+       </Modal>
     </div>
     );
   }
