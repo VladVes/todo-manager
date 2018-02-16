@@ -9,6 +9,7 @@ const Container = connect(
       tasks: tasksSelector(state),
       queue: queueSelector(state),
       taskOrderingState: state.taskOrderingState,
+      tasksFetchingState: state.tasksFetchingState,
     };
     return props;
   },

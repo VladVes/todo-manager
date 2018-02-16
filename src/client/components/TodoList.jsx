@@ -1,21 +1,22 @@
 import _ from 'lodash';
 import React from 'react';
-import Modal from 'react-modal';; // eslint-disable-line
+import { NavLink } from 'react-router-dom'; // eslint-disable-line
+import Modal from 'react-modal'; // eslint-disable-line
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';// eslint-disable-line
-import { faArrowUp, faArrowDown, faEdit, faTrash} from '@fortawesome/fontawesome-free-solid'// eslint-disable-line
+import { faArrowUp, faArrowDown, faEdit, faTrash, faPlusCircle } from '@fortawesome/fontawesome-free-solid'// eslint-disable-line
 import cn from 'classnames'; // eslint-disable-line
 
 
 const filters = [['all', 'all'], ['new', 'new'], ['active', 'active'], ['resolved', 'resolved'], ['closed', 'closed']];
 const customStyles = {
-  content : {
-    top                   : '50%',
-    left                  : '50%',
-    right                 : 'auto',
-    bottom                : 'auto',
-    marginRight           : '-50%',
-    transform             : 'translate(-50%, -50%)'
-  }
+  content: {
+    top: '50%',
+    left: '50%',
+    right: 'auto',
+    bottom: 'auto',
+    marginRight: '-50%',
+    transform: 'translate(-50%, -50%)',
+  },
 };
 
 export default class TodoList extends React.Component {
@@ -25,7 +26,7 @@ export default class TodoList extends React.Component {
     taskId: null,
   };
 
-  getConfirmation = (id) => (e) => {
+  getConfirmation = id => (e) => {
     e.preventDefault();
     this.setState({ modalIsOpen: true, taskId: id });
   }
@@ -40,7 +41,7 @@ export default class TodoList extends React.Component {
   }
 
   closeModal = () => {
-    this.setState({modalIsOpen: false});
+    this.setState({ modalIsOpen: false });
   }
 
   editTask = id => (e) => {
@@ -87,7 +88,7 @@ export default class TodoList extends React.Component {
     return (
       <div>
         <div class="table-responsive-sm">
-          <table className="table table-dark">
+          <table className="table table-striped table-hover">
           <thead>
             <tr>
               <th></th>
@@ -152,14 +153,29 @@ export default class TodoList extends React.Component {
   }
 
   render() {
-    const { tasks } = this.props;
+    //  const { tasks } = this.props;
 
-    if (tasks.length === 0) {
-      return null;
+    if (this.props.tasksFetchingState === 'failed') {
+      return (
+        <div>
+          <h1>ToDo list:</h1>
+          <div className="alert alert-danger" role="alert">
+            Something went wrong! Can't fetch tasks
+          </div>
+        </div>
+      );
+    }
+    if (this.props.tasksFetchingState === 'requested') {
+      return <div><h1>ToDo list:</h1><h3>Loading...</h3></div>;
     }
 
-    return <div className="mt-3">
+    return <div className="mt-3 mx-auto">
       <h1>ToDo list:</h1>
+      <NavLink to="tasks/new">
+        <button className="btn btn-success btn-lg">
+          <FontAwesomeIcon icon={faPlusCircle} />
+        </button>
+      </NavLink>
         <div className="col-5 mt-3 d-flex justify-content-around">
           {filters.map(filter => this.renderFilter(filter))}
         </div>

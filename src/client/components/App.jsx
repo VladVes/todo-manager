@@ -1,15 +1,25 @@
 import React from 'react'; // eslint-disable-line
-import { Link } from 'react-router'; // eslint-disable-line
+import PropTypes from 'prop-types'; // eslint-disable-line
+import { Provider } from 'react-redux'; // eslint-disable-line
+import { BrowserRouter as Router, Route } from 'react-router-dom'; // eslint-disable-line
+import Welcome from './Welcome.jsx'; // eslint-disable-line
+import NewTodoForm from '../containers/NewTodoForm';
+import TodoList from '../containers/TodoList';
 
-export default (props) => (
-  <div className="mx-auto mt-5 col-8">
-    <header>ToDo manager</header>
-      <menu>
-        <ul>
-          <li><Link to="/tasks">Tasks</Link></li>
-          <li><Link to="/newtask">New task</Link></li>
-        </ul>
-      </menu>
-      {props.children}
-  </div>
+const App = ({ store }) => (
+  <Provider store={store}>
+    <Router>
+      <div className="mx-auto mt-5 col-7">
+        <Route exact={true} path="/" component={Welcome} />
+        <Route exact={true} path="/tasks" component={TodoList} />
+        <Route exact={true} path="/tasks/new" component={NewTodoForm} />
+      </div>
+    </Router>
+  </Provider>
 );
+
+App.propTypes = {
+  store: PropTypes.object.isRequired,
+};
+
+export default App;
