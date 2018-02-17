@@ -24,7 +24,7 @@ export const renderDatePicker = ({ input, label, meta: { touched, error, warning
   <div>
     <label>{label}</label>
     <div>
-      <DatePicker className="form-control" {...input} dateForm="DD/MM/YYYY" selected={input.value ? moment(input.value) : null} />
+      <DatePicker className="form-control" {...input} dateForm="MM/DD/YYYY" selected={input.value ? moment(input.value) : null} />
       {touched && ((error && <div className="alert alert-danger mt-3">
         <FontAwesomeIcon icon={faExclamationCircle} />
         {error}
