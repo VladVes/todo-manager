@@ -60,19 +60,17 @@ export default (router) => {
     })
     .patch('updateTask', '/tasks/:id', async (ctx) => {
       const { id } = ctx.params;
-      /*
+      const data = ctx.request.body;
       try {
-        const task = await Task.findById(id);
-        await task.remove();
-        const queue = await Queue.findOne({ name: 'order' });
-        const updatedData = queue.data.filter(item => !_.isEqual(item, task._id));
-        queue.set({ data: updatedData });
-        const updatedQueue = await queue.save();
-        ctx.body = { queue: updatedQueue.data };
+        const updatedTask = await Task.findByIdAndUpdate(
+          id,
+          { $set: { ...data } },
+          { new: true },
+        );
+        ctx.body = { task: updatedTask };
       } catch (e) {
         throw new Error(e);
       }
-      */
     })
     .delete('deleteTask', '/tasks/:id', async (ctx) => {
       const { id } = ctx.params;
