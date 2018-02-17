@@ -37,7 +37,7 @@ export default () => {
       await next();
     } catch (err) {
       log('Error: ', err);
-      if(process.env.NODE_ENV === 'production') {
+      if (process.env.NODE_ENV === 'production') {
         rollbar.error(err, ctx.request);
       }
     }
