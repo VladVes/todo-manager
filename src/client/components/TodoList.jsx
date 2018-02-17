@@ -6,6 +6,8 @@ import FontAwesomeIcon from '@fortawesome/react-fontawesome';// eslint-disable-l
 import { faArrowUp, faArrowDown, faEdit, faTrash, faPlusCircle } from '@fortawesome/fontawesome-free-solid'// eslint-disable-line
 import cn from 'classnames'; // eslint-disable-line
 
+import EditTodoForm from '../containers/EditTodoForm';
+
 
 const filters = [['all', 'all'], ['new', 'new'], ['active', 'active'], ['resolved', 'resolved'], ['closed', 'closed']];
 const customStyles = {
@@ -22,30 +24,37 @@ const customStyles = {
 export default class TodoList extends React.Component {
   state = {
     activeFilter: 'all',
-    modalIsOpen: false,
+    modalConfirmationIsOpen: false,
+    modalTaskEditIsOpen: false,
     taskId: null,
+    taskToEdit: null,
   };
 
   getConfirmation = id => (e) => {
     e.preventDefault();
-    this.setState({ modalIsOpen: true, taskId: id });
+    this.setState({ modalConfirmationIsOpen: true, taskId: id });
+  }
+
+  getEditForm = task => (e) => {
+    e.preventDefault();
+    this.setState({ modalTaskEditIsOpen: true, taskToEdit: task });
   }
 
   removeTask = () => {
     this.props.removeTask({ id: this.state.taskId });
-    this.setState({ modalIsOpen: false, taskId: null });
+    this.setState({ modalConfirmationIsOpen: false, taskId: null });
   }
 
   afterOpenModal = () => {
     this.subtitle.style.color = '#f00';
   }
 
-  closeModal = () => {
-    this.setState({ modalIsOpen: false });
+  closeConfirmationModal = () => {
+    this.setState({ modalConfirmationIsOpen: false });
   }
 
-  editTask = id => (e) => {
-    e.preventDefault();
+  closeTaskEditModal = () => {
+    this.setState({ modalTaskEditIsOpen: false, taskToEdit: null });
   }
 
   applyFilter(state) {
@@ -55,14 +64,16 @@ export default class TodoList extends React.Component {
   taskOrderUp = (taskId, pos) => (e) => {
     e.preventDefault();
     if (pos > 1) {
-      this.props.changeTaskOrder({ taskId, index: pos - 1, move: 'up' });
+      const index = pos - 1;
+      this.props.changeTaskOrder({ taskId, index, move: 'up' });
     }
   }
 
   taskOrderDown = (taskId, pos) => (e) => {
     e.preventDefault();
     if (pos < this.props.queue.length) {
-      this.props.changeTaskOrder({ taskId, index: pos - 1, move: 'down' });
+      const index = pos - 1;
+      this.props.changeTaskOrder({ taskId, index, move: 'down' });
     }
   }
 
@@ -120,7 +131,13 @@ export default class TodoList extends React.Component {
                 <th>{deadLine}</th>
                 <th>
                   <div class="btn-group btn-group-sm" role="group" aria-label="First group">
-                    <button type="button" className={buttonClasses} onClick={this.editTask(_id)}>
+                    <button type="button" className={buttonClasses} onClick={this.getEditForm({
+                        _id,
+                        header,
+                        priority,
+                        status,
+                        deadLine,
+                      })}>
                       <FontAwesomeIcon icon={faEdit} />
                     </button>
                     <button type="button" className={buttonClasses} onClick={this.getConfirmation(_id)}>
@@ -132,17 +149,6 @@ export default class TodoList extends React.Component {
           </tbody>
         </table>
       </div>
-      <Modal
-         isOpen={this.state.modalIsOpen}
-         onAfterOpen={this.afterOpenModal}
-         onRequestClose={this.closeModal}
-         style={customStyles}
-         contentLabel="Task delete confirmation"
-       >
-         <h2 ref={subtitle => this.subtitle = subtitle}>Are you sure ?</h2>
-         <button className="btn btn-secondary mx-3" onClick={this.closeModal}>Close</button>
-         <button className="btn btn-danger mx-3" onClick={this.removeTask}>Delete</button>
-       </Modal>
     </div>
     );
   }
@@ -153,8 +159,6 @@ export default class TodoList extends React.Component {
   }
 
   render() {
-    //  const { tasks } = this.props;
-
     if (this.props.tasksFetchingState === 'failed') {
       return (
         <div>
@@ -168,18 +172,47 @@ export default class TodoList extends React.Component {
     if (this.props.tasksFetchingState === 'requested') {
       return <div><h1>ToDo list:</h1><h3>Loading...</h3></div>;
     }
+    const initialValues = this.state.taskToEdit;
+    const id = this.state.taskToEdit ? this.state.taskToEdit._id : null;
 
-    return <div className="mt-3 mx-auto">
-      <h1>ToDo list:</h1>
-      <NavLink to="tasks/new">
-        <button className="btn btn-success btn-lg">
-          <FontAwesomeIcon icon={faPlusCircle} />
-        </button>
-      </NavLink>
-        <div className="col-5 mt-3 d-flex justify-content-around">
-          {filters.map(filter => this.renderFilter(filter))}
-        </div>
-      {this.renderTasks()}
-    </div>;
+    return (
+      <div className="mt-3 mx-auto">
+        <h1>ToDo list:</h1>
+        <NavLink to="tasks/new">
+          <button className="btn btn-success btn-lg">
+            <FontAwesomeIcon icon={faPlusCircle} />
+          </button>
+        </NavLink>
+          <div className="col-5 mt-3 d-flex justify-content-around">
+            {filters.map(filter => this.renderFilter(filter))}
+          </div>
+        {this.renderTasks()}
+        <Modal
+           isOpen={this.state.modalConfirmationIsOpen}
+           onAfterOpen={this.afterOpenModal}
+           onRequestClose={this.closeModal}
+           style={customStyles}
+           contentLabel="Task delete confirmation"
+         >
+           <h2 ref={subtitle => this.subtitle = subtitle}>Are you sure ?</h2>
+           <button className="btn btn-secondary mx-3" onClick={this.closeConfirmationModal}>Close</button>
+           <button className="btn btn-danger mx-3" onClick={this.removeTask}>Delete</button>
+         </Modal>
+         <Modal
+            isOpen={this.state.modalTaskEditIsOpen}
+            onAfterOpen={this.afterOpenModal}
+            onRequestClose={this.closeTaskEditModal}
+            style={customStyles}
+            contentLabel="Task edit"
+          >
+            <h2 ref={subtitle => this.subtitle = subtitle}>Task edit</h2>
+            <EditTodoForm
+              taskId={id}
+              closeTaskEditModal={this.closeTaskEditModal}
+              initialValues={initialValues}
+            />
+          </Modal>
+      </div>
+    );
   }
 }
