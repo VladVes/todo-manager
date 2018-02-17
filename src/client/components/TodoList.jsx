@@ -6,8 +6,8 @@ import FontAwesomeIcon from '@fortawesome/react-fontawesome';// eslint-disable-l
 import { faArrowUp, faArrowDown, faEdit, faTrash, faPlusCircle } from '@fortawesome/fontawesome-free-solid'// eslint-disable-line
 import cn from 'classnames'; // eslint-disable-line
 
-import EditTodoForm from '../containers/EditTodoForm';
-
+import EditTodoForm from '../containers/EditTodoForm'; // eslint-disable-line
+/* eslint-disable no-underscore-dangle */
 
 const filters = [['all', 'all'], ['new', 'new'], ['active', 'active'], ['resolved', 'resolved'], ['closed', 'closed']];
 const customStyles = {
@@ -85,7 +85,7 @@ export default class TodoList extends React.Component {
     const rawTasks = this.props.tasks;
     const { queue } = this.props;
     const orderedTasks = queue.reduce((acc, id, index) => {
-      const task = _.find(rawTasks, t => _.isEqual(t._id, id)); // eslint-disable-line
+      const task = _.find(rawTasks, t => _.isEqual(t._id, id));
       if (!task) {
         return acc;
       }
@@ -112,7 +112,9 @@ export default class TodoList extends React.Component {
             </tr>
           </thead>
           <tbody>
-            {tasks.map(({ _id, order, header, priority, status, deadLine }) => ( // eslint-disable-line
+            {tasks.map(({
+              _id, order, header, priority, status, deadLine,
+            }) => (
               <tr>
                 <th>
                   <div class="btn-group btn-group-sm" role="group" aria-label="First group">
@@ -194,7 +196,9 @@ export default class TodoList extends React.Component {
            style={customStyles}
            contentLabel="Task delete confirmation"
          >
-           <h2 ref={subtitle => this.subtitle = subtitle}>Are you sure ?</h2>
+           <h2 ref={(subtitle) => {
+               this.subtitle = subtitle;
+             }}>Are you sure ?</h2>
            <button className="btn btn-secondary mx-3" onClick={this.closeConfirmationModal}>Close</button>
            <button className="btn btn-danger mx-3" onClick={this.removeTask}>Delete</button>
          </Modal>
@@ -205,7 +209,9 @@ export default class TodoList extends React.Component {
             style={customStyles}
             contentLabel="Task edit"
           >
-            <h2 ref={subtitle => this.subtitle = subtitle}>Task edit</h2>
+            <h2 ref={(subtitle) => {
+                this.subtitle = subtitle;
+              }}>Task edit</h2>
             <EditTodoForm
               taskId={id}
               closeTaskEditModal={this.closeTaskEditModal}
