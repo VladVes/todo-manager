@@ -1,11 +1,11 @@
 import path from 'path';
 import webpack from 'webpack';
-import HtmlWebpackPlugin from 'html-webpack-plugin';
+import ExtractTextPlugin from 'extract-text-webpack-plugin';
 
 export default () => ({
-  devtool: 'inline-source-map',
+  // devtool: 'inline-source-map',
   devServer: {
-    contentBase: path.join(__dirname, 'public'),
+    contentBase: path.join(__dirname, 'public', 'assets'),
     compress: true,
     port: 8085,
   },
@@ -19,53 +19,63 @@ export default () => ({
     publicPath: '/assets/',
   },
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.js[x]?$/,
         exclude: /node_modules/,
         loader: 'babel-loader',
         include: path.join(__dirname, 'src/client'),
-        query: { presets: ['env', 'react', 'stage-0'] },
+        query: {
+          plugins: [
+            'transform-runtime',
+            'transform-react-remove-prop-types',
+            'transform-react-constant-elements',
+            'transform-react-inline-elements',
+          ],
+          presets: ['env', 'react', 'stage-0'],
+        },
       },
       {
         test: /\.css$/,
-        use: [
-          'style-loader',
-          { loader: 'css-loader', options: { importLoaders: 1 } },
-          {
-            loader: 'postcss-loader',
-            options: {
-              plugins: () => [
-                require('precss'), // eslint-disable-line
-                require('autoprefixer')() // eslint-disable-line
-              ],
-            },
-          },
-        ],
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: 'css-loader',
+        }),
+      },
+      {
+        test: /\.sass$/,
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: ['css-loader', 'sass-loader'],
+        }),
       },
     ],
   },
   plugins: [
-    new HtmlWebpackPlugin({
-      template: './public/index.html',
-      filename: 'index.html',
-      inject: 'body',
-    }),
+    new ExtractTextPlugin('bundle.css'),
     new webpack.ProvidePlugin({
       $: 'jquery',
       jQuery: 'jquery',
       'window.jQuery': 'jquery',
-      Popper: ['popper.js', 'default'],
     }),
     new webpack.optimize.CommonsChunkPlugin({
-      // This name 'vendor' ties into the entry definition
       name: 'vendor',
-      // We don't want the default vendor.js name
       filename: 'vendor.js',
-      // Passing Infinity just creates the commons chunk, but moves no modules into it.
-      // In other words, we only put what's in the vendor entry definition in vendor-bundle.js
       minChunks: Infinity,
     }),
-    // new webpack.optimize.UglifyJsPlugin(),
+    new webpack.optimize.UglifyJsPlugin({
+      // sourceMap: true,
+      beautify: false,
+      comments: false,
+      compress: {
+        sequences: true,
+        booleans: true,
+        loops: true,
+        unused: true,
+        warnings: false,
+        drop_console: true,
+        unsafe: true,
+      },
+    }),
   ],
 });
