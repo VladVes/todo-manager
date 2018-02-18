@@ -8,5 +8,7 @@ lint:
 	npm run eslint ./src/**
 startd:
 	DEBUG="todoManager:*" npm run nodemon -- --watch . --ext js,jsx,pug --exec npm run start:dev:server
+start:
+	DEBUG="todoManager:*" npm run start
 hot:
 	npm run start:dev:client
