@@ -7,7 +7,6 @@ import { renderField, renderDatePicker } from './inputs.jsx';
 class EditTodoForm extends React.Component {
   updateTask = (value) => {
     const task = { _id: this.props.taskId, ...value }; // eslint-disable-line
-    console.log('UPDATED TASK TO SAVE: ', task);
     this.props.closeTaskEditModal();
     this.props.updateTask(task);
   }
