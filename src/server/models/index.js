@@ -1,7 +1,6 @@
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import task from './tasks';
-import user from './users';
 import queue from './queue';
 import getLogger from '../lib/log';
 import getConfig from '../../../config/config';
@@ -26,7 +25,6 @@ db.once('open', () => {
 });
 
 const Task = task(mongoose);
-const User = user(mongoose);
 const Queue = queue(mongoose);
 
-export { Task, User, Queue };
+export { Task, Queue };
