@@ -42,14 +42,14 @@ export const updateTask = task => async (dispatch) => {
     header,
     priority,
     status,
-    deadline,
+    deadLine,
   } = task;
   try {
     const response = await axios.patch(routes.taskUrl(task._id), {  // eslint-disable-line
       header,
       priority,
       status,
-      deadline,
+      deadLine,
     });
     dispatch(updateTaskSuccess({ data: response.data }));
   } catch (e) {
