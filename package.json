@@ -38,6 +38,7 @@
     "build": "npm run webpack -- -p --env production && babel src/server --out-dir dist --source-map inline",
     "start:dev:server": "babel-node -- src/server/bin/todoManager.js",
     "start:dev:client": "webpack-dev-server",
+    "start": "babel-node -- src/server/bin/todoManager.js",
     "nodemon": "nodemon",
     "webpack": "webpack"
   },
