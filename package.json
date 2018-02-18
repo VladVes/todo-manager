@@ -39,6 +39,7 @@
     "start:dev:server": "babel-node -- src/server/bin/todoManager.js",
     "start:dev:client": "webpack-dev-server",
     "start": "babel-node -- src/server/bin/todoManager.js",
+    "buildAndStart": "npm run build && npm run start",
     "nodemon": "nodemon",
     "webpack": "webpack"
   },
