@@ -89,8 +89,10 @@ class NewTodoForm extends React.Component {
            style={customStyles}
            contentLabel="Task creating"
          >
-           <h2 ref={subtitle => this.subtitle = subtitle}>Creating task...</h2>
-           <h3>{this.props.taskCreatingState === 'successed' ? 'Task created!' : 'Something goes wrong, try enother one'}</h3>
+           <h2 ref={(subtitle) => {
+               this.subtitle = subtitle;
+             }}>Creating task...</h2>
+           <h3>{this.props.taskCreatingState === 'successed' ? 'Task created!' : 'Creating task...'}</h3>
            <button className="btn btn-success mx-3" onClick={this.closeModal}>Create another task</button>
            <NavLink to='/tasks'>
              <button className="btn btn-primary mx-3" onClick={this.closeModal}>To list</button>
