@@ -51,6 +51,7 @@ export default () => {
   }));
   app.use(serve(path.join(__dirname, '..', '..', 'public')));
 
+  /*
   if (process.env.NODE_ENV === 'production') {
     app.use(middleware({
       config: getWebpackConfig(),
@@ -58,6 +59,7 @@ export default () => {
   } else {
     log('starting nodemon...');
   }
+  */
 
   log(`runnig in ${process.env.NODE_ENV} environment`);
   log(`listen on port == ${process.env.PORT}`);
