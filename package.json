@@ -147,6 +147,6 @@
     "nock": "^9.1.0",
     "nodemon": "^1.14.12",
     "supertest": "*",
-    "timeout-then": "*",
+    "timeout-then": "*"
   }
 }
