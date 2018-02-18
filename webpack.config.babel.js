@@ -3,12 +3,14 @@ import webpack from 'webpack';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
 
 export default () => ({
-  // devtool: 'inline-source-map',
+  /*
+  devtool: 'inline-source-map',
   devServer: {
     contentBase: path.join(__dirname, 'public', 'assets'),
     compress: true,
     port: 8085,
   },
+  */
   entry: {
     app: ['./src/client'],
     vendor: ['babel-polyfill', 'jquery', 'jquery-ujs', 'bootstrap'],
