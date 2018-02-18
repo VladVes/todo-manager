@@ -2,6 +2,5 @@
 /dist/
 /coverage/
 /vendor/
-/public/assets/
 /package-lock.json
 /.env
