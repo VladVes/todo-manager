@@ -64,7 +64,7 @@ export default () => ({
       minChunks: Infinity,
     }),
     new webpack.optimize.UglifyJsPlugin({
-      // sourceMap: true,
+      sourceMap: true,
       beautify: false,
       comments: false,
       compress: {
