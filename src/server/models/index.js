@@ -11,7 +11,7 @@ const log = getLogger('DB');
 const config = getConfig()[process.env.NODE_ENV];
 
 if (config.use_env_variable) {
-  mongoose.connect(config.use_env_variable);
+  mongoose.connect(process.env[config.use_env_variable]);
 } else {
   mongoose.connect(config.connectionString);
 }

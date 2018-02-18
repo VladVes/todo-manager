@@ -5,7 +5,10 @@ export default (router) => {
   router.get('tasks', '/tasks', async (ctx) => {
     try {
       const tasks = await Task.find();
-      const queue = await Queue.findOne({ name: 'order' });
+      let queue = await Queue.findOne({ name: 'order' });
+      if (!queue) {
+        queue = await Queue.create({ name: 'order', data: [] });
+      }
       ctx.body = { tasks, queue: queue.data };
     } catch (e) {
       throw new Error(e);
@@ -16,10 +19,7 @@ export default (router) => {
       const newTask = new Task(task);
       try {
         const savedTask = await newTask.save();
-        let queue = await Queue.findOne({ name: 'order' });
-        if (!queue) {
-          queue = await Queue.create({ name: 'order', data: [] });
-        }
+        const queue = await Queue.findOne({ name: 'order' });
         queue.set({ data: [...queue.data, savedTask._id] }); // eslint-disable-line
         const savedQueue = await queue.save();
         ctx.body = { task: savedTask, queue: savedQueue.data };

@@ -6,7 +6,7 @@ import Koa from 'koa';
 import Rollbar from 'rollbar';
 import Router from 'koa-router';
 import session from 'koa-generic-session';
-import middleware from 'koa-webpack';
+// import middleware from 'koa-webpack';
 import flash from 'koa-flash-simple';
 import bodyParser from 'koa-bodyparser';
 import methodOverride from 'koa-methodoverride';
@@ -17,7 +17,7 @@ import KeyGrip from 'keygrip';
 
 import addRoutes from './routes';
 import getLogger from './lib/log';
-import getWebpackConfig from '../../webpack.config.babel';
+// import getWebpackConfig from '../../webpack.config.babel';
 
 export default () => {
   const app = new Koa();
@@ -51,6 +51,7 @@ export default () => {
   }));
   app.use(serve(path.join(__dirname, '..', '..', 'public')));
 
+  /*
   if (process.env.NODE_ENV === 'production') {
     app.use(middleware({
       config: getWebpackConfig(),
@@ -58,6 +59,7 @@ export default () => {
   } else {
     log('starting nodemon...');
   }
+  */
   log(`runnig in ${process.env.NODE_ENV} environment`);
   log(`listen on port == ${process.env.PORT}`);
 
