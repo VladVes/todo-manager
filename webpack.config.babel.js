@@ -32,7 +32,7 @@ export default () => ({
             'transform-react-constant-elements',
             'transform-react-inline-elements',
           ],
-          presets: ['env', 'react', 'stage-0'],
+          presets: [['env'], ['react'], ['stage-0']],
         },
       },
       {

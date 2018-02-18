@@ -1,1 +1,1 @@
-web: npm run babel-node -- 'src/server/bin/todoManager.js'
+web: npm run start
