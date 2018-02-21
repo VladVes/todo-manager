@@ -1,5 +1,4 @@
-## todo-manager
-### Aspirity test task.
+# "Todo-manager" Aspirity test task.
 
 ## Requirements  
 
