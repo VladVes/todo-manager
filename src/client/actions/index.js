@@ -26,6 +26,13 @@ export const taskOrderingRequest = createAction('TASK_ORDER_REQUEST');
 export const taskOrderingSuccess = createAction('TASK_ORDER_SUCCESS');
 export const taskOrderingFailure = createAction('TASK_ORDER_FAILURE');
 
+axios.defaults.headers.common['Content-Type'] = 'application/json';
+
+const http = axios.create({
+  timeout: 2000,
+  headers: {'Content-Type': 'application/json'},
+});
+
 export const addTask = task => async (dispatch) => {
   dispatch(addTaskRequest());
   try {
@@ -45,11 +52,15 @@ export const updateTask = task => async (dispatch) => {
     deadLine,
   } = task;
   try {
-    const response = await axios.patch(routes.taskUrl(task._id), {  // eslint-disable-line
-      header,
-      priority,
-      status,
-      deadLine,
+    const response = await axios({
+      method: 'patch',
+      url: routes.taskUrl(task._id),
+      data: {
+        header,
+        priority,
+        status,
+        deadLine,
+      },
     });
     dispatch(updateTaskSuccess({ data: response.data }));
   } catch (e) {
@@ -61,7 +72,11 @@ export const fetchTasks = () => async (dispatch) => {
   dispatch(fetchTasksRequest());
   try {
     const url = routes.tasksUrl();
-    const response = await axios.get(url);
+    const response = await axios({
+      method: 'get',
+      url,
+      data: null,
+    });
     dispatch(fetchTasksSuccess({ data: response.data }));
   } catch (e) {
     dispatch(fetchTasksFailure());
