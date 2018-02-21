@@ -10,15 +10,15 @@ import App from './components/App.jsx'; // eslint-disable-line
 import { fetchTasks } from './actions';
 
 /* eslint-disable no-underscore-dangle */
-const ext = window.__REDUX_DEVTOOLS_EXTENSION__; // eslint-disable-line
-const devtoolMiddleware = ext && ext();
+// const ext = window.__REDUX_DEVTOOLS_EXTENSION__; // eslint-disable-line
+// const devtoolMiddleware = ext && ext();
 /* eslint-enable */
 
 const store = createStore(
   reducers,
   compose(
-    applyMiddleware(thunk),
-    devtoolMiddleware,
+    applyMiddleware(thunk)
+    // devtoolMiddleware,
   ),
 );
 store.dispatch(fetchTasks());
