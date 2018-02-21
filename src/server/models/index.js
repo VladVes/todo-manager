@@ -1,13 +1,12 @@
 import mongoose from 'mongoose';
-import dotenv from 'dotenv';
 import task from './tasks';
 import queue from './queue';
 import getLogger from '../lib/log';
 import getConfig from '../../../config/config';
 
-dotenv.config();
 const log = getLogger('DB');
-const config = getConfig()[process.env.NODE_ENV];
+const env = process.env.NODE_ENV || 'development';
+const config = getConfig()[env];
 
 if (config.use_env_variable) {
   mongoose.connect(process.env[config.use_env_variable]);

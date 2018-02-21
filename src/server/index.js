@@ -14,9 +14,14 @@ import serve from 'koa-static';
 import koaLogger from 'koa-logger';
 import Pug from 'koa-pug';
 import KeyGrip from 'keygrip';
+import dotenv from 'dotenv';
 
 import addRoutes from './routes';
 import getLogger from './lib/log';
+
+dotenv.config();
+const env = process.env.NODE_ENV || 'development';
+const port = process.env.NODE_ENV || '5000';
 // import getWebpackConfig from '../../webpack.config.babel';
 
 export default () => {
@@ -61,8 +66,8 @@ export default () => {
   }
   */
 
-  log(`runnig in ${process.env.NODE_ENV} environment`);
-  log(`listen on port == ${process.env.PORT}`);
+  log(`runnig in ${env} environment`);
+  log(`listen on port == ${port}`);
 
   app.use(koaLogger());
   const router = new Router();
