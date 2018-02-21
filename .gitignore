@@ -4,4 +4,3 @@
 /coverage/
 /vendor/
 /package-lock.json
-/.env
