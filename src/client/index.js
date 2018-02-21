@@ -16,11 +16,9 @@ import { fetchTasks } from './actions';
 
 const store = createStore(
   reducers,
-  compose(
-    applyMiddleware(thunk)
-    // devtoolMiddleware,
-  ),
-);
+  compose(applyMiddleware(thunk),
+  // , devtoolMiddleware
+  )); // eslint-disable-line
 store.dispatch(fetchTasks());
 
 render(
