@@ -3,6 +3,10 @@ import { Task, Queue } from '../models';
 
 export default (router) => {
   router.get('tasks', '/tasks', async (ctx) => {
+    if (ctx.request.type !== 'application/json') {
+      ctx.redirect(router.url('root'));
+      return;
+    }
     try {
       const tasks = await Task.find();
       let queue = await Queue.findOne({ name: 'order' });
