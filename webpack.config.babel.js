@@ -63,7 +63,7 @@ export default () => ({
     new webpack.optimize.CommonsChunkPlugin({
       name: 'vendor',
       filename: 'vendor.js',
-      minChunks: Infinity,
+      //minChunks: Infinity,
     }),
     new webpack.optimize.UglifyJsPlugin({
       sourceMap: true,
